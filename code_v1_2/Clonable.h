@@ -5,7 +5,7 @@
 class Clonable {
 public:
     virtual ~Clonable() {}
-    virtual Clonable* clone() const = 0;
+    virtual Clonable* clone() const ;
 };
 
 #endif

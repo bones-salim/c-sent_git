@@ -1,62 +1,60 @@
-#ifndef _BESTIOLES_H_
-#define _BESTIOLES_H_
-
+#ifndef BESTIOLE_H
+#define BESTIOLE_H
 
 #include "UImg.h"
-
-#include <iostream>
-
-using namespace std;
+#include "Comportement.h"
 #include "IBestiole.h"
 #include "Clonable.h"
+#include "Milieu.h"
+
+#include <iostream>
+#include <cstdlib>
+#include <cmath>
 
 class Milieu;
 
-
-class Bestiole :public Interface_Bestiole, public Clonable
+class Bestiole : public Interface_Bestiole, public Clonable
 {
+private:
+   static const double AFF_SIZE;
+   static const double MAX_VITESSE;
+   static const double LIMITE_VUE;
 
-private :
-   static const double     AFF_SIZE;
-   static const double     MAX_VITESSE;
-   static const double     LIMITE_VUE;
-   
+   static int next;
 
-   static int              next;
+   int identite;
+   int x, y;
+   double cumulX, cumulY;
+   double orientation;
+   double vitesse;
+   int dureeVie;
+   Comportement* comportement;
+   unsigned char* couleur;
 
-private :
-   int               identite;
-   int               x, y;
-   double            cumulX, cumulY;
-   double            orientation;
-   double            vitesse;
-   int               dureeVie;
-   T               * couleur;
+   void bouge(int xLim, int yLim);
 
-private :
-   void bouge( int xLim, int yLim );
+public:
+   Bestiole(Comportement* comp);
+   Bestiole(const Bestiole & b);
+   Bestiole(int initX, int initY);
+   ~Bestiole();
 
-public :                                           // Forme canonique :
-   Bestiole( void );                               // Constructeur par defaut
-   Bestiole( const Bestiole & b );                 // Constructeur de copies
-   Bestiole(int initX, int initY);                 // Constructur spécifique 
-   ~Bestiole( void );                              // Destructeur
-                                                   // Operateur d'affectation binaire par defaut
-   void action( Milieu & monMilieu );
-   void draw( UImg & support );
+   void action(Milieu &monMilieu);
+   void draw(UImg &support);
 
-   bool jeTeVois( const Bestiole & b ) const;
+   bool jeTeVois(const Bestiole &b) const;
 
-   void initCoords( int xLim, int yLim );
+   void initCoords(int xLim, int yLim);
+   bool victoire(const Bestiole &autre);
 
-   friend bool operator==( const Bestiole & b1, const Bestiole & b2 );
-
-   void bouge(int, int);
-   void affiche() const;
-   bool victoire(Bestiole&);
-   void action();
    Bestiole* clone() const override;
+   void draw(int support) override;
+   void preUpdate(int minX, int minY) override;
+   void update(int minX, int minY) override;
+   void collide() override;
+   bool see(int entity) override;
+
+   friend bool operator==(const Bestiole &b1, const Bestiole &b2);
 };
 
-
-#endif
+#endif // BESTIOLE_H
