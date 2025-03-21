@@ -17,7 +17,7 @@ class Kamikaze : public Comportement //heritage
     protected:
     public:
         Kamikaze(Bestiole *bestiole);
-        void behave() const override;
+        void behave() override;
         //TODO fix behave()
         virtual Comportement* clone(Bestiole *bestiole) const override; //why should we override it ?
         //reference vs pointers
