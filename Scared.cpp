@@ -1,18 +1,18 @@
-#include "Kamikaze.h"
+#include "Peureuse.h"
 #include <vector>
 #include "Milieu.h"
-Kamikaze::Kamikaze(Bestiole *bestiole) : bestiole(bestiole)
+Peureuse::Peureuse(Bestiole *bestiole) : bestiole(bestiole)
 {
 }
-void Kamikaze::behave()
+void Peureuse::behave()
 {
-    //bestiole->setCouleur(255, 0, 0);   // Red color for Kamikaze
+    //bestiole->setCouleur(255, 0, 0);   // x color for Peureuse
     // Identify the nearest bestiole and find it
     Bestiole *target = getTarget();
     if ((target) ) 
     {
-        chase(*target);
-        
+        // Move in order to collide with it
+        chase(target);
     }
 }
 Bestiole *Kamikaze::getTarget()

@@ -53,7 +53,8 @@ public :                                           // Forme canonique :
    int getY() const { return y; }
    void setX(int _x) { x = _x; }
    void setY(int _y) { y = _y; }
-   void setOrientation(int x, int y){orientation = -std::atan2(y, x);}   
+   void setOrientation(double o) { orientation = o; }
+   void setOrientation_cart(int x, int y){orientation = -std::atan2(y, x);}
    double getOrientation() const { return orientation; }
 };
 
