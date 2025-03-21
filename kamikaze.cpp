@@ -35,12 +35,12 @@ void Kamikaze::chase(Bestiole *target)
         double dx = target->getX() - bestiole->getX();
         double dy = target->getY() - bestiole->getY();
         double norm = sqrt(dx * dx + dy * dy);
-        if norm>0
+        if (norm>0)
         {
             dx = dx / norm;
             dy = dy / norm;
         }
-        double direction= std::-atan2(dy, dx); //angle inversed becasue it's in
+        double direction= -std::atan2(dy, dx); //angle inversed becasue it's in
         bestiole->setOrientation(direction);
    
     }

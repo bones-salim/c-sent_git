@@ -18,8 +18,7 @@ class Kamikaze : public Comportement //heritage
     public:
         Kamikaze(Bestiole *bestiole);
         void behave() override;
-        //TODO fix behave()
-        virtual Comportement* clone(Bestiole *bestiole) const override; //why should we override it ?
+        virtual Comportement* clone(Bestiole *bestiole) const override;
         //reference vs pointers
         Bestiole* getTarget();
         void chase(Bestiole& target);
