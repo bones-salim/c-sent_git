@@ -9,21 +9,21 @@ class Peureuse : public Comportement //heritage
 {
 
     private:
+        double regvit= bestiole->getVitesse();
+        double speedmultiplier;
+        double maxpeed;
         Bestiole *bestiole;
-        void chase(Bestiole *target);
-        int mobsize;
+        int seuilPeur;
         bool panic();
-        
-
-
+        int countNeighbors();
+        void run();
+       
+    
     protected:
     public:
         Peureuse(Bestiole *bestiole);
-        void behave() override;
+        void behave(std::vector<Bestiole>& ListeBestioles) override;
         virtual Comportement* clone(Bestiole *bestiole) const override;
-        //reference vs pointers
-        Bestiole* countNeighbors();
-        void run();
         ~Peureuse() = default;
 
 }

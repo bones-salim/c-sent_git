@@ -49,13 +49,15 @@ public :                                           // Forme canonique :
    friend bool operator==( const Bestiole & b1, const Bestiole & b2 );
    void setCouleur( int r, int g, int b );
    //added
-   int getX() const { return x; }
-   int getY() const { return y; }
-   void setX(int _x) { x = _x; }
-   void setY(int _y) { y = _y; }
-   void setOrientation(double o) { orientation = o; }
-   void setOrientation_cart(int x, int y){orientation = -std::atan2(y, x);}
-   double getOrientation() const { return orientation; }
+   int getX() const { return x; };
+   int getY() const { return y; };
+   void setX(int _x) { x = _x; };
+   void setY(int _y) { y = _y; };
+   void setOrientation(double o) { orientation = o; };
+   void setOrientation_cart(int x, int y){orientation = -std::atan2(y, x);};
+   double getOrientation() const { return orientation; };
+   void setVitesse(double v) { vitesse = v; };
+   double getVitesse() const { return vitesse; };
 };
 
 

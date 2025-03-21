@@ -4,18 +4,18 @@
 Kamikaze::Kamikaze(Bestiole *bestiole) : bestiole(bestiole)
 {
 }
-void Kamikaze::behave()
+void Kamikaze::behave(std::vector<Bestiole>& ListeBestiole)
 {
     //bestiole->setCouleur(255, 0, 0);   // Red color for Kamikaze
     // Identify the nearest bestiole and find it
-    Bestiole *target = getTarget();
+    Bestiole *target = getTarget(std::vector<Bestiole>& ListeBestiole);
     if ((target) ) 
     {
         chase(*target);
         
     }
 }
-Bestiole *Kamikaze::getTarget()
+Bestiole *Kamikaze::getTarget(std::vector<Bestiole>& ListeBestiole)
     {
         double minDistance=1000000;
         Bestiole* target=nullptr;
@@ -29,6 +29,7 @@ Bestiole *Kamikaze::getTarget()
                     minDistance = distance;
                     target = &(*it);
                 }
+
             }
         return target;
         }

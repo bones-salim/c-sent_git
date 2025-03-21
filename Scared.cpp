@@ -1,61 +1,54 @@
-#include "Peureuse.h"
+#include "Scared.h"
 #include <vector>
 #include "Milieu.h"
-Peureuse::Peureuse(Bestiole *bestiole) : bestiole(bestiole)
-{
+#include <cmath>
+
+Scared::Scared(Bestiole *bestiole) : bestiole(bestiole)
+{   regvit= bestiole->getVitesse();
+    speedmultiplier=1.5;
+    seuilPeur=5;
+    maxpeed=regvit*speedmultiplier;
+    internalclock=0;
 }
-void Peureuse::behave()
+void Scared::behave(vector<Bestiole> &listeBestioles)
 {
-    //bestiole->setCouleur(255, 0, 0);   // x color for Peureuse
-    // Identify the nearest bestiole and find it
-    Bestiole *target = getTarget();
-    if ((target) ) 
+    if (countNeighbors(vector<Bestiole> &listeBestioles) && internalclock==0)
     {
-        // Move in order to collide with it
-        chase(target);
+        run();
+        internalclock=5;
     }
-}
-Bestiole *Kamikaze::getTarget()
+    else if (internalclock>0)
     {
-        double minDistance=1000000;
-        Bestiole* target=nullptr;
+        internalclock--;
+    }
+    else
+    {
+        bestiole->setVitesse(regvit);
+    }
+  
+}
+int Scared::countNeighbors(vector<Bestiole> &listeBestioles)
+    {
+        int nbNeighbors = 0;
         for (std::vector<Bestiole>::iterator it = listeBestioles.begin(); it != listeBestioles.end(); ++it)
 
             if (bestiole->jeTeVois(*it))
             {
-                double distance = calculateDistance(*bestiole, *it);
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    target = &(*it);
-                }
+                nbNeighbors++;
             }
-        return target;
+        return nbNeighbors;
         }
         
-    
-void Kamikaze::chase(Bestiole *target)
-    {
-        double dx = target->getX() - bestiole->getX();
-        double dy = target->getY() - bestiole->getY();
-        double norm = sqrt(dx * dx + dy * dy);
-        if (norm>0)
-        {
-            dx = dx / norm;
-            dy = dy / norm;
-        }
-        double direction= -std::atan2(dy, dx); //angle inversed becasue it's in flipped coordinates
-        bestiole->setOrientation(direction);
-   
-    }
-double Kamikaze::calculateDistance(const Bestiole &b1, const Bestiole &b2)
-    {
-        double dx = b1.getX() - b2.getX();
-        double dy = b1.getY() - b2.getY();
-        return sqrt(dx * dx + dy * dy);
-    }
+void Scared::run()
+{   
+    double direction = bestiole->getOrientation();
+    bestiole->setOrientation(direction+M_PI);
+    bestiole->setVitesse(bestiole->getVitesse()*speedmultiplier);
 
-Comportement *Kamikaze::clone(Bestiole *bestiole) const
+
+}
+
+Comportement *Scared::clone(Bestiole *bestiole) const
 {
-    return new Kamikaze(bestiole);
+    return new Scared(bestiole);
 }
