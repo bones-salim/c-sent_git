@@ -12,7 +12,7 @@ Scared::Scared(Bestiole *bestiole) : bestiole(bestiole)
 }
 void Scared::behave(vector<Bestiole> &listeBestioles)
 {
-    if (countNeighbors(vector<Bestiole> &listeBestioles) && internalclock==0)
+    if (countNeighbors(listeBestioles) && internalclock==0)
     {
         run();
         internalclock=5;
@@ -42,7 +42,7 @@ int Scared::countNeighbors(vector<Bestiole> &listeBestioles)
 void Scared::run()
 {   
     double direction = bestiole->getOrientation();
-    bestiole->setOrientation(direction+M_PI);
+    bestiole->setOrientation(fmod((direction + 3.1415926), (2 * 3.1415926)));
     bestiole->setVitesse(bestiole->getVitesse()*speedmultiplier);
 
 
