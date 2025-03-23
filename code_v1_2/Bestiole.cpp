@@ -17,6 +17,7 @@ Bestiole::Bestiole(Comportement* comp)
    vitesse = static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE;
    comportement = comp;  // Clonage correct du comportement
    dureeVie = 20;
+   age=10;
 
    couleur = new unsigned char[3];
    couleur[0] = static_cast<unsigned char>(rand() % 230);
@@ -36,6 +37,7 @@ Bestiole::Bestiole(const Bestiole &b)
    vitesse = b.vitesse;
    comportement = b.comportement;
    dureeVie = b.dureeVie;
+   age=b.age;
 
    couleur = new unsigned char[3];
    std::copy(b.couleur, b.couleur + 3, couleur);
@@ -119,7 +121,14 @@ bool operator==(const Bestiole &b1, const Bestiole &b2)
 {
    return (b1.identite == b2.identite);
 }
-void Bestiole::draw(int support) {}
+
+int Bestiole::get_age() const {
+   return this->age;
+}
+
+int  Bestiole::get_dureeVie() const{
+   return this->dureeVie;
+}
 void Bestiole::preUpdate(int minX, int minY) {}
 void Bestiole::update(int minX, int minY) {}
 void Bestiole::collide() {}
