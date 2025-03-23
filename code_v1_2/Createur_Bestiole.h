@@ -10,8 +10,8 @@ class Createur_Bestiole : public Createur {
 private:
     static Createur_Bestiole* instance;
     Createur_Bestiole() {} // Singleton
-    Createur_Bestiole(const Createur_Bestiole&) = delete;
-    Createur_Bestiole& operator=(const Createur_Bestiole&) = delete;
+    Createur_Bestiole(const Createur_Bestiole&) ;
+    Createur_Bestiole& operator=(const Createur_Bestiole&) ;
 
 public:
     static Createur_Bestiole* getInstance();

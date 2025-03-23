@@ -10,8 +10,8 @@ Createur_Bestiole* Createur_Bestiole::getInstance() {
     return instance;
 }
 
-Bestiole* Createur_Bestiole::creerBestiole(int xLim, int yLim, Comportement* comp) {
-    return new Bestiole(xLim, yLim, comp);
+Bestiole* Createur::creerEntite(Comportement* comp) {
+    return new Bestiole(comp);
 }
 
 

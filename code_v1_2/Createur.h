@@ -5,7 +5,7 @@
 class Createur {
 public:
     virtual ~Createur() {}
-    virtual void creerEntite(int, int) = 0;
+    virtual void creerEntite(Comportement* comp) = 0;
 };
 
 #endif

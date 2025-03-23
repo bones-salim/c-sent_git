@@ -42,7 +42,8 @@ public:
 
    void action(Milieu &monMilieu);
    void draw(UImg &support);
-   int  get_age();
+   int  get_age() const;
+   int  get_dureeVie() const;
    bool jeTeVois(const Bestiole &b) const;
 
    void initCoords(int xLim, int yLim);

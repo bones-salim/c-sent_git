@@ -40,6 +40,9 @@ int Milieu::nbVoisins(const Bestiole& b)
 void Milieu::ajouterBestiole_clonage(Bestiole* b) {
    listeBestioles.push_back(std::unique_ptr<Bestiole>(b->clone()));
 }
+void Milieu::naissance(){
+   
+}
 
 
 //mort_naturelle
