@@ -28,6 +28,7 @@ private:
    double orientation;
    double vitesse;
    int dureeVie;
+   int age;
    Comportement* comportement;
    unsigned char* couleur;
 
@@ -41,14 +42,13 @@ public:
 
    void action(Milieu &monMilieu);
    void draw(UImg &support);
-
+   int  get_age();
    bool jeTeVois(const Bestiole &b) const;
 
    void initCoords(int xLim, int yLim);
    bool victoire(const Bestiole &autre);
 
    Bestiole* clone() const override;
-   void draw(int support) override;
    void preUpdate(int minX, int minY) override;
    void update(int minX, int minY) override;
    void collide() override;

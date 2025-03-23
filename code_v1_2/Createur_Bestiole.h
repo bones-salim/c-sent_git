@@ -15,7 +15,7 @@ private:
 
 public:
     static Createur_Bestiole* getInstance();
-    Bestiole* creerBestiole(int xLim, int yLim, Comportement* comp);
+    Bestiole* creerBestiole(Comportement* comp);
 };
 
 #endif

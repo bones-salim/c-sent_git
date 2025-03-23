@@ -7,19 +7,19 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <memory>
 
 class Milieu : public UImg
 {
 private:
     static const T white[];
-    
     int width;
     int height;
-    std::vector<Bestiole> listeBestioles;
-    std::map<Comportement*, double> bestioleConfig; // Supposons que 'prob' = double
+    std::vector<std::unique_ptr<Bestiole>> listeBestioles;
+    std::map<Comportement*, double> bestioleConfig;
     bool event_Naissance;
     bool event_Mort;
-    double taux_naissance;  // Les tirets sont interdits dans les noms de variables
+    double tauxNaissance;
 
 public:
     Milieu(int _width, int _height);
@@ -29,10 +29,12 @@ public:
     int getHeight() const { return height; }
 
     void step();
-    void addMember(const Bestiole& b);
+    void ajouterBestiole_clonage(std::unique_ptr<Bestiole> bestiole);
     int nbVoisins(const Bestiole& b);
-    void removeMember();
+    void ajouterPopulationSpontanee();
+    void afficher();
+    void ajouterBestiole(Bestiole *b);
+    void supprimerBestiole(Bestiole *b);
 };
 
-#endif
-
+#endif // MILIEU_H

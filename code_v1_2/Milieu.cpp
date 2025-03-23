@@ -2,58 +2,53 @@
 #include "Createur_Bestiole.h"
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
+const T Milieu::white[] = { (T)255, (T)255, (T)255 };
 
-const T    Milieu::white[] = { (T)255, (T)255, (T)255 };
-
-
-Milieu::Milieu( int _width, int _height ) : UImg( _width, _height, 1, 3 ),
-                                            width(_width), height(_height)
+Milieu::Milieu(int _width, int _height) : UImg(_width, _height, 1, 3), width(_width), height(_height)
 {
-
-   cout << "const Milieu" << endl;
-
-   std::srand( time(NULL) );
-
+    std::cout << "const Milieu" << std::endl;
+    std::srand(static_cast<unsigned int>(time(nullptr)));
 }
 
-
-Milieu::~Milieu( void )
+Milieu::~Milieu()
 {
-
-   cout << "dest Milieu" << endl;
-
+    std::cout << "dest Milieu" << std::endl;
 }
 
-
-void Milieu::step( void )
+void Milieu::step()
 {
-
-   cimg_forXY( *this, x, y ) fillC( x, y, 0, white[0], white[1], white[2] );
-   for ( std::vector<Bestiole>::iterator it = listeBestioles.begin() ; it != listeBestioles.end() ; ++it )
-   {
-
-      it->action( *this );
-      it->draw( *this );
-
-   } // for
-
+    cimg_forXY(*this, x, y) fillC(x, y, 0, white[0], white[1], white[2]);
+    for (auto& bestiole : listeBestioles) {
+      bestiole->action(*this);
+      bestiole->draw(*this);
+  }
 }
 
-
-int Milieu::nbVoisins( const Bestiole & b )
+int Milieu::nbVoisins(const Bestiole& b)
 {
-
-   int         nb = 0;
-
-
-   for ( std::vector<Bestiole>::iterator it = listeBestioles.begin() ; it != listeBestioles.end() ; ++it )
-      if ( !(b == *it) && b.jeTeVois(*it) )
-         ++nb;
-
-   return nb;
-
+    int nb = 0;
+    for (const auto& bestiole : listeBestioles)
+    {
+        if (!(b == *bestiole) && b.jeTeVois(*bestiole))
+            ++nb;
+    }
+    return nb;
 }
-void addMember(const Bestiole& b,int xLim, int yLim ){
-   creerBestiole(xLim , yLim )
+
+void Milieu::ajouterBestiole_clonage(Bestiole* b) {
+   listeBestioles.push_back(std::unique_ptr<Bestiole>(b->clone()));
 }
+
+
+//mort_naturelle
+void Milieu::supprimerBestiole(Bestiole* b) {
+   if (b->get_age() >= b->get_dureeVie()) {
+      listeBestioles.erase(std::remove_if(listeBestioles.begin(), listeBestioles.end(),
+      [b](const std::unique_ptr<Bestiole>& bestiolePtr) {
+          return bestiolePtr.get() == b;
+      }), listeBestioles.end());
+   }
+}
+
