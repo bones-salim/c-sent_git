@@ -12,7 +12,7 @@ Scared::Scared(Bestiole *bestiole) : bestiole(bestiole)
 }
 void Scared::behave(vector<Bestiole> &listeBestioles)
 {
-    if (countNeighbors(listeBestioles) && internalclock==0)
+    if ((countNeighbors(listeBestioles)>seuilPeur) && (internalclock==0))
     {
         run();
         internalclock=5;

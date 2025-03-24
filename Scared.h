@@ -14,7 +14,7 @@ class Scared : public Comportement //heritage
         Bestiole *bestiole;
         int seuilPeur;
         bool panic();
-        int countNeighbors();
+        int countNeighbors(std::vector<Bestiole>& ListeBestioles);
         void run();
         int internalclock;
         double maxpeed;
@@ -22,7 +22,7 @@ class Scared : public Comportement //heritage
     protected:
     public:
         Scared(Bestiole *bestiole);
-        void behave() override;
+        void behave(std::vector<Bestiole>& ListeBestioles) override;
         virtual Comportement* clone(Bestiole *bestiole) const override;
         ~Scared() = default;
 

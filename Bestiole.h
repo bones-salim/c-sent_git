@@ -28,6 +28,8 @@ private :
    double            cumulX, cumulY;
    double            orientation;
    double            vitesse;
+   double            mortProb;
+   
 
    T               * couleur;
 
@@ -58,6 +60,8 @@ public :                                           // Forme canonique :
    double getOrientation() const { return orientation; };
    void setVitesse(double v) { vitesse = v; };
    double getVitesse() const { return vitesse; };
+   void collision();
+
 };
 
 

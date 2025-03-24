@@ -15,7 +15,7 @@ class Peureuse : public Comportement //heritage
         Bestiole *bestiole;
         int seuilPeur;
         bool panic();
-        int countNeighbors();
+        int countNeighbors(std::vector<Bestiole>& ListeBestioles);
         void run();
        
     

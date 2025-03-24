@@ -12,12 +12,12 @@ Peureuse::Peureuse(Bestiole *bestiole) : bestiole(bestiole)
     maxpeed=regvit*speedmultiplier;
 
 }
-void Peureuse::behave()
+void Peureuse::behave(std::vector<Bestiole>& ListeBestioles)
 {
     //bestiole->setCouleur( 0,255, 0);   // x color for Peureuse
     // Identify the nearest bestiole and find it
     // idea: we count the number of neighbours and if it's more than a certain number we run
-    int nbNeighbors= countNeighbors();
+    int nbNeighbors= countNeighbors(ListeBestioles);
     
     if ( nbNeighbors > seuilPeur)
     {
@@ -30,10 +30,10 @@ void Peureuse::behave()
     
   
 }
-int Peureuse::countNeighbors()
+int Peureuse::countNeighbors(std::vector<Bestiole>& ListeBestioles)
     {
         int nbNeighbors = 0;
-        for (std::vector<Bestiole>::iterator it = listeBestioles.begin(); it != listeBestioles.end(); ++it)
+        for (std::vector<Bestiole>::iterator it = ListeBestioles.begin(); it != ListeBestioles.end(); ++it)
 
             if (bestiole->jeTeVois(*it))
             {

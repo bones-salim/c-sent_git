@@ -31,6 +31,28 @@ Bestiole::Bestiole( void )
    couleur[ 2 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
 
 }
+ void Bestiole::setOrientation(double orientation)
+{
+    this->orientation = orientation;
+}
+void Bestiole::setVitesse(double vitesse)
+{
+    this->vitesse = vitesse;
+}
+void Bestiole::collision()
+{  
+   double ran = static_cast<double>(std::rand()) / RAND_MAX;
+   if (ran < deathProb)
+   {
+      timeToLive = -1;
+   }
+   else
+   {
+      // change the direction of the Bestiole in the opposite direction
+      orientation = std::fmod(orientation + M_PI, 2 * M_PI);
+   }
+}
+
 
 
 Bestiole::Bestiole( const Bestiole & b )
@@ -140,8 +162,9 @@ bool Bestiole::jeTeVois( const Bestiole & b ) const
 
    double         dist;
 
-
    dist = std::sqrt( (x-b.x)*(x-b.x) + (y-b.y)*(y-b.y) );
    return ( dist <= LIMITE_VUE );
 
 }
+
+
