@@ -1,5 +1,5 @@
+#include <string>
 #ifndef comportement_h
-#include <vector>
 #define comportement_h
 class Bestiole;
 class Comportement
@@ -8,10 +8,11 @@ class Comportement
     protected:
         Bestiole *bestiole;
     public:
-        virtual void behave(std::vector<Bestiole>& ListeBestioles) = 0;
-        virtual Comportement *clone(Bestiole *bestiole) const = 0;
+        virtual void behave() = 0;
+        //virtual Comportement *clone(Bestiole *bestiole) const = 0;
         //pure virtual function  default Beahaviour de
         virtual ~Comportement() = default;
-}
-;
+      virtual std::unique_ptr<Comportement> clone() const = 0;
+      virtual std::string getNom() =0;
+    } ;
 #endif

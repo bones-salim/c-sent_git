@@ -1,37 +1,51 @@
-#ifndef _MILIEU_H_
-#define _MILIEU_H_
-
+#ifndef MILIEU_H
+#define MILIEU_H
 
 #include "UImg.h"
 #include "Bestiole.h"
+#include "Createur_Bestiole.h"
+#include "Comportement.h"
+#include "Gregaire.h"
+#include "peureuse.h"
+#include  "Prevoyante.h"
+#include "kamikaze.h"
+#include "PersonnalitesMultiples.h"
 
 #include <iostream>
 #include <vector>
-
-using namespace std;
-
-
+#include <map>
+#include <memory>
+#include <random>
 class Milieu : public UImg
 {
+private:
+    static const T white[];
+    int width;
+    int height;
+    std::vector<std::unique_ptr<Bestiole>> listeBestioles;
+    std::map<std::string, double> bestioleConfig;
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_real_distribution<> dis;
+    bool event_Naissance;
+    bool event_Mort;
+    double taux_Naissance;
 
-private :
-   static const T          white[];
+public:
+    Milieu(int _width, int _height);
+    ~Milieu();
 
-   int                     width, height;
-   std::vector<Bestiole>   listeBestioles;
+    int getWidth() const { return width; }
+    int getHeight() const { return height; }
 
-public :
-   Milieu( int _width, int _height );
-   ~Milieu( void );
+    void step();
+    int nbVoisins(const Bestiole& b) ;
+    void naissance();
+    void ajouterPopulationSpontanee();
+    void afficher();
+    void ajouterBestiole_factory(Bestiole *b);
+    void ajouterBestiole_clonage(Bestiole *b);
+    void supprimerBestiole(Bestiole *b);
+};
 
-   int getWidth( void ) const { return width; };
-   int getHeight( void ) const { return height; };
-
-   void step( void );
-
-   void addMember( const Bestiole & b ) { listeBestioles.push_back(b); listeBestioles.back().initCoords(width, height); }
-   int nbVoisins( const Bestiole & b );
-
-}; 
-
-#endif
+#endif // MILIEU_H
