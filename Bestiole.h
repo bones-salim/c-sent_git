@@ -61,6 +61,8 @@ public :                                           // Forme canonique :
    void setVitesse(double v) { vitesse = v; };
    double getVitesse() const { return vitesse; };
    void collision();
+   double setMortProb(double deathProb) { mortProb = deathProb; };
+   double getMortProb() const { return mortProb; };
 
 };
 
