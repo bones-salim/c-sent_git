@@ -15,7 +15,7 @@ private:
 
 public:
     static Createur_Bestiole* getInstance();
-    Bestiole* creerBestiole(Comportement* comp);
+    Bestiole* creerBestiole(std::unique_ptr<Comportement>) override;
 };
 
 #endif
