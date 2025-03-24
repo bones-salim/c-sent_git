@@ -1,15 +1,43 @@
 #include "Camouflage.h"
+#include "Bestiole.h"
+#include <cmath>
 
-Camouflage::Camouflage(Bestiole* bestiole, double psi) : AccessoryDecorator(bestiole), psi(psi) {}
-
-void Camouflage::ApplyEffect() {
-    // Par exemple, rendre la bestiole plus difficile à voir pour d'autres bestioles
+Camouflage::Camouflage(Bestiole* b, double efficaciteCamouflage)
+    : AccessoireDecorator(b), efficaciteCamouflage(efficaciteCamouflage)
+{
+    applyEffect();
 }
 
-void Camouflage::DrawEffect(UImg& support) {
-    // Dessiner l'effet du camouflage
+Camouflage::~Camouflage() {
 }
 
-Camouflage* Camouflage::clone(Bestiole* bestiole) {
-    return new Camouflage(bestiole, psi);  // Créer une copie de l'objet Camouflage
+void Camouflage::applyEffect()
+{
+    // Le camouflage est passif : l'effet se manifeste dans la détection via getCamouflage()
+}
+
+void Camouflage::drawEffect(UImg &support)
+{
+    // Dessiner un halo indiquant le camouflage
+    support.drawHalo(bestiole->x, bestiole->y, 25, efficaciteCamouflage);
+}
+
+void Camouflage::detecter()
+{
+    // Non applicable
+}
+
+bool Camouflage::jeTeDetecte(const Bestiole &autre)
+{
+    return false;
+}
+
+Camouflage* Camouflage::clone(Bestiole* b) const
+{
+    return new Camouflage(b, efficaciteCamouflage);
+}
+
+double Camouflage::getCamouflage() const
+{
+    return efficaciteCamouflage;
 }

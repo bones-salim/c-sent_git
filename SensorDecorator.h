@@ -7,7 +7,7 @@
 class SensorDecorator : public BestioleDecorator {
 protected:
     double capacity;
-
+s
 public:
     SensorDecorator(Bestiole* b, double c);
     virtual void detecter() = 0;

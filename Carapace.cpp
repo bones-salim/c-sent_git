@@ -1,16 +1,53 @@
+/**
+ * @file Carapace.cpp
+ * @brief Implements the Carapace class.
+ */
 #include "Carapace.h"
+#include "Bestiole.h"
+#include <cstring>
+#include <cmath>
 
-Carapace::Carapace(Bestiole* bestiole, double eta, double omega) : AccessoryDecorator(bestiole), eta(eta), omega(omega) {}
+Carapace::Carapace(Bestiole* b, double eta, double omega)
+{
+    this->bestiole = b;
+    this->eta = eta;
+    this->omega = omega;
 
-void Carapace::ApplyEffect() {
-    // Implémentation de l'effet de la carapace
-    // Par exemple, augmenter la défense ou diminuer la vitesse
+    couleur = new unsigned char[3];
+    couleur[0] = 255; // Rouge
+    couleur[1] = 0;
+    couleur[2] = 0;
+
+    applyEffect();
 }
 
-void Carapace::DrawEffect(UImg& support) {
-    // Dessiner l'effet de la carapace sur l'entité bestiole
+Carapace::~Carapace()
+{
+    delete[] couleur;
 }
 
-Carapace* Carapace::clone(Bestiole* bestiole) {
-    return new Carapace(bestiole, eta, omega);  // Créer une copie de l'objet Carapace
+void Carapace::applyEffect()
+{
+    bestiole->setVitesse( bestiole->getVitesse() / eta );
+    bestiole->setDeathProb( bestiole->getDeathProb() / omega );
+}
+
+void Carapace::drawEffect(UImg &support)
+{
+    support.draw_circle(bestiole->x, bestiole->y, 15, couleur, 0.1);
+}
+
+void Carapace::detecter()
+{
+    // Non applicable pour un accessoire
+}
+
+bool Carapace::jeTeDetecte(const Bestiole &autre)
+{
+    return false;
+}
+
+Carapace* Carapace::clone(Bestiole* b) const
+{   
+    return new Carapace(b, eta, omega);
 }

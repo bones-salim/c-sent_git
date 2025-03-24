@@ -1,15 +1,37 @@
 #include "Nageoires.h"
+#include "Bestiole.h"
+#include <cmath>
 
-Nageoires::Nageoires(Bestiole* bestiole, double speedMultiplier) : AccessoryDecorator(bestiole), speedMultiplier(speedMultiplier) {}
-
-void Nageoires::ApplyEffect() {
-    // Par exemple, augmenter la vitesse de la bestiole
+Nageoires::Nageoires(Bestiole* b, double coeffMultiplicateur)
+    : AccessoireDecorator(b), coeffMultiplicateur(coeffMultiplicateur)
+{
+    applyEffect();
 }
 
-void Nageoires::DrawEffect(UImg& support) {
-    // Dessiner l'effet des nageoires
+Nageoires::~Nageoires() {
 }
 
-Nageoires* Nageoires::clone(Bestiole* bestiole) {
-    return new Nageoires(bestiole, speedMultiplier);  // Créer une copie de l'objet Nageoires
+void Nageoires::applyEffect()
+{
+    bestiole->setVitesse( bestiole->getVitesse() * coeffMultiplicateur );
+}
+
+void Nageoires::drawEffect(UImg &support)
+{
+    support.drawText(bestiole->x, bestiole->y - 10, "Nageoires", bestiole->couleur);
+}
+
+void Nageoires::detecter()
+{
+    // Non applicable
+}
+
+bool Nageoires::jeTeDetecte(const Bestiole &autre)
+{
+    return false;
+}
+
+Nageoires* Nageoires::clone(Bestiole* b) const
+{
+    return new Nageoires(b, coeffMultiplicateur);
 }
