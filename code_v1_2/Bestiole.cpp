@@ -102,7 +102,7 @@ void Bestiole::draw(UImg &support)
    support.draw_circle(xt, yt, AFF_SIZE / 2., couleur);
 }
 
-bool Bestiole::jeTeVois(const Bestiole &b) const
+bool Bestiole::jeTeVois(const Bestiole &autre) const
 {
    bool detecteParYeux = (sensorYeux != nullptr) ? sensorYeux->jeTeDetecte(autre) : false;
    bool detecteParOreilles = (sensorOreilles != nullptr) ? sensorOreilles->jeTeDetecte(autre) : false;

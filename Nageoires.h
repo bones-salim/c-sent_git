@@ -16,9 +16,7 @@ public:
 
     virtual void applyEffect() override;
     virtual void drawEffect(UImg &support) override;
-    virtual void detecter() override; // Non applicable
-    virtual bool jeTeDetecte(const Bestiole &autre) override; // Non applicable
-
+    
     virtual Nageoires* clone(Bestiole* b) const override;
 };
 
