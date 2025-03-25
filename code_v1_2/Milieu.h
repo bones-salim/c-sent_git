@@ -4,11 +4,22 @@
 #include "UImg.h"
 #include "Bestiole.h"
 #include "Createur_Bestiole.h"
+#include "Comportement.h"
+#include "Gregaire.h"
+#include "peureuse.h"
+#include  "Prevoyante.h"
+#include "kamikaze.h"
+#include "PersonnalitesMultiples.h"
+
 #include <iostream>
 #include <vector>
 #include <map>
 #include <memory>
+<<<<<<< HEAD
+#include <random>
+=======
 
+>>>>>>> 190583cf5849345e9f7cf7ae76a4d2235bc9af27
 class Milieu : public UImg
 {
 private:
@@ -16,7 +27,14 @@ private:
     int width;
     int height;
     std::vector<std::unique_ptr<Bestiole>> listeBestioles;
+<<<<<<< HEAD
+    std::map<std::string, double> bestioleConfig;
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_real_distribution<> dis;
+=======
     std::map<Comportement*, double> bestioleConfig;
+>>>>>>> 190583cf5849345e9f7cf7ae76a4d2235bc9af27
     bool event_Naissance;
     bool event_Mort;
     double taux_Naissance;

@@ -1,4 +1,4 @@
-#include "Peureuse.h"
+#include "peureuse.h"
 #include <vector>
 #include "Milieu.h"
 #include <cmath>
@@ -49,6 +49,10 @@ void Peureuse::run()
     bestiole->setVitesse(maxpeed);
 
 
+}
+std::string getNom() const override { return "Peureuse"; }
+std::unique_ptr<Comportement> clone() const override {
+    return std::make_unique<Peureuse>(); // Copie
 }
 
 Comportement *Peureuse::clone(Bestiole *bestiole) const

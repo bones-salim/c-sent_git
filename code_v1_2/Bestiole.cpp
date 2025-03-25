@@ -6,7 +6,7 @@ const double Bestiole::LIMITE_VUE = 30.;
 
 int Bestiole::next = 0;
 
-Bestiole::Bestiole(Comportement* comp)
+Bestiole::Bestiole(std::unique_ptr<Comportement> comportement) : comportement(std::move(comportement))
 {
    identite = ++next;
    std::cout << "const Bestiole (" << identite << ") par defaut" << std::endl;
@@ -15,7 +15,6 @@ Bestiole::Bestiole(Comportement* comp)
    cumulX = cumulY = 0.;
    orientation = static_cast<double>(rand()) / RAND_MAX * 2. * M_PI;
    vitesse = static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE;
-   comportement = comp;  // Clonage correct du comportement
    dureeVie = 20;
    age=10;
 
@@ -25,11 +24,20 @@ Bestiole::Bestiole(Comportement* comp)
    couleur[2] = static_cast<unsigned char>(rand() % 230);
 }
 
-Bestiole::Bestiole(const Bestiole &b)
+Bestiole::Bestiole(const Bestiole &b): comportement(b.comportement ? b.comportement->clone() : nullptr) 
 {
-   identite = ++next;
-   std::cout << "const Bestiole (" << identite << ") par copie" << std::endl;
+    identite = ++next;
+    std::cout << "const Bestiole (" << identite << ") par copie" << std::endl;
 
+<<<<<<< HEAD
+    x = b.x + 1;
+    y = b.y + 1;
+    cumulX = cumulY = 0.;
+    orientation = b.orientation;
+    vitesse = b.vitesse;
+    dureeVie = b.dureeVie;
+    age = b.age;
+=======
    x = b.x + 1;
    y = b.y + 1;
    cumulX = cumulY = 0.;
@@ -38,15 +46,16 @@ Bestiole::Bestiole(const Bestiole &b)
    comportement = b.comportement;
    dureeVie = b.dureeVie;
    age=b.age;
+>>>>>>> 190583cf5849345e9f7cf7ae76a4d2235bc9af27
 
-   couleur = new unsigned char[3];
-   std::copy(b.couleur, b.couleur + 3, couleur);
+    couleur = new unsigned char[3];
+    std::copy(b.couleur, b.couleur + 3, couleur);
 }
+
 
 Bestiole::~Bestiole()
 {
    delete[] couleur;
-   delete comportement;
    std::cout << "dest Bestiole" << std::endl;
 }
 
@@ -56,6 +65,9 @@ void Bestiole::initCoords(int xLim, int yLim)
    y = rand() % yLim;
 }
 
+Comportement* Bestiole::getComportement() const {
+   return comportement.get();
+}
 void Bestiole::bouge(int xLim, int yLim)
 {
    double nx, ny;

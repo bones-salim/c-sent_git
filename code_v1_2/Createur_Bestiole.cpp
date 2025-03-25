@@ -10,8 +10,8 @@ Createur_Bestiole* Createur_Bestiole::getInstance() {
     return instance;
 }
 
-Bestiole* Createur::creerEntite(Comportement* comp) {
-    return new Bestiole(comp);
+Bestiole* Createur_Bestiole::creerBestiole(std::unique_ptr<Comportement> comp) {
+    return new Bestiole(std::move(comp));  
 }
 
 

@@ -127,7 +127,7 @@ bool operator==(const Bestiole &b1, const Bestiole &b2)
 
 void Bestiole::preUpdate(int minX, int minY) {}
 void Bestiole::update(int minX, int minY) {}
-void Bestiole::collision() {
+void Bestiole::collision() 
    {
       // Roll a dice to see if the Bestiole dies
       double ran = static_cast<double>(std::rand()) / RAND_MAX;
@@ -140,5 +140,5 @@ void Bestiole::collision() {
          dureeVie= -1;
       }
    }
-}
+
 bool Bestiole::see(int entity) {}

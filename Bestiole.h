@@ -48,7 +48,7 @@ public :                                           // Forme canonique :
    void draw( UImg & support );
 
    bool jeTeVois( const Bestiole & b ) const;
-
+   bool victoire( const Bestiole & autre );
    void initCoords( int xLim, int yLim );
 
    friend bool operator==( const Bestiole & b1, const Bestiole & b2 );
