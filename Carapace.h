@@ -1,7 +1,7 @@
 #ifndef CARAPACE_H
 #define CARAPACE_H
 
-#include "AccessoireDecorator.h"
+#include "AccessoryDecorator.h"
 #include "UImg.h"
 
 /**
@@ -9,7 +9,7 @@
  *
  * Réduit la vitesse de la bestiole et diminue sa probabilité de mourir lors d'une collision.
  */
-class Carapace : public AccessoireDecorator {
+class Carapace : public AccessoryDecorator {
 private:
     double eta;    ///< Facteur de réduction de vitesse (η ∈ [1 ; η_max])
     double omega;  ///< Facteur de réduction de la probabilité de mort (ω ∈ [1 ; ω_max])
