@@ -1,7 +1,7 @@
 #ifndef PEUREUSE_H
 #define PEUREUSE_H
 #include <cmath>
-#include "Bestiole.h"
+#include "code_v1_2/Bestiole.h"
 #include "Comportement.h"
 class Bestiole;
 
@@ -9,7 +9,7 @@ class Peureuse : public Comportement //heritage
 {
 
     private:
-        double regvit= bestiole->getVitesse();
+        double regvit;
         double speedmultiplier;
         double maxpeed;
         Bestiole *bestiole;
@@ -22,10 +22,11 @@ class Peureuse : public Comportement //heritage
     protected:
     public:
         Peureuse(Bestiole *bestiole);
-        void behave(std::vector<Bestiole>& ListeBestioles) override;
-        virtual Comportement* clone(Bestiole *bestiole) const override;
+        void behave(std::vector<Bestiole>& ListeBestioles);
+        virtual std::string getNom() const = 0 ;
+        virtual std::unique_ptr<Comportement> clone() const = 0;
         ~Peureuse() = default;
-
+        
 }
 ;
 #endif
