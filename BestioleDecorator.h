@@ -17,11 +17,7 @@ public:
     BestioleDecorator(Bestiole* b);
     virtual ~BestioleDecorator();
 
-    // Méthodes abstraites à implémenter par les décorateurs
-    virtual void detecter() = 0;
-    virtual bool jeTeDetecte(const Bestiole &autre) = 0;
-    virtual void applyEffect() = 0;
-    virtual void drawEffect(UImg &support) = 0;
+    
 
     /**
      * @brief Clone le décorateur pour une nouvelle instance de Bestiole.
