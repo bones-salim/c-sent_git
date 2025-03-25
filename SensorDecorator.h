@@ -1,19 +1,35 @@
-#ifndef _SENSORDECORATOR_H_
-#define _SENSORDECORATOR_H_
+#ifndef SENSOR_DECORATOR_H
+#define SENSOR_DECORATOR_H
 
-#include "BestioleDecorator.h"
+#include "Bestiole.h"
+#include "UImg.h"
 
-// Définition de la classe sensorielle
-class SensorDecorator : public BestioleDecorator {
+/**
+ * @brief Interface abstraite pour les capteurs.
+ *
+ * Chaque capteur décorateur contient un pointeur vers la Bestiole décorée
+ * et doit implémenter la méthode de détection, ici sous la forme de jeTeDetecte.
+ */
+class SensorDecorator {
 protected:
-    double capacity;
-s
+    Bestiole* bestiole; ///< Bestiole décorée
 public:
-    SensorDecorator(Bestiole* b, double c);
-    virtual void detecter() = 0;
-    virtual void method2(int type1, int type2);
-    virtual Bestiole* clone() override;
+    SensorDecorator(Bestiole* b) : bestiole(b) {}
+    virtual ~SensorDecorator() {}
+    
+    /**
+     * @brief Détermine si le capteur détecte une bestiole cible.
+     * @param autre La bestiole cible.
+     * @return true si détectée, false sinon.
+     */
+    virtual bool jeTeDetecte(const Bestiole &autre) = 0;
+    
+    /**
+     * @brief Clone le capteur pour une nouvelle instance de Bestiole.
+     * @param b Nouvelle Bestiole à décorer.
+     * @return Pointeur sur le clone du capteur.
+     */
+    virtual SensorDecorator* clone(Bestiole* b) const = 0;
 };
 
-#endif // SENSORDECORATOR_H
- 
+#endif // SENSOR_DECORATOR_H

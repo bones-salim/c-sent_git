@@ -29,7 +29,6 @@ Bestiole::Bestiole(const Bestiole &b): comportement(b.comportement ? b.comportem
     identite = ++next;
     std::cout << "const Bestiole (" << identite << ") par copie" << std::endl;
 
-<<<<<<< HEAD
     x = b.x + 1;
     y = b.y + 1;
     cumulX = cumulY = 0.;
@@ -37,16 +36,6 @@ Bestiole::Bestiole(const Bestiole &b): comportement(b.comportement ? b.comportem
     vitesse = b.vitesse;
     dureeVie = b.dureeVie;
     age = b.age;
-=======
-   x = b.x + 1;
-   y = b.y + 1;
-   cumulX = cumulY = 0.;
-   orientation = b.orientation;
-   vitesse = b.vitesse;
-   comportement = b.comportement;
-   dureeVie = b.dureeVie;
-   age=b.age;
->>>>>>> 190583cf5849345e9f7cf7ae76a4d2235bc9af27
 
     couleur = new unsigned char[3];
     std::copy(b.couleur, b.couleur + 3, couleur);
@@ -115,8 +104,9 @@ void Bestiole::draw(UImg &support)
 
 bool Bestiole::jeTeVois(const Bestiole &b) const
 {
-   double dist = std::sqrt((x - b.x) * (x - b.x) + (y - b.y) * (y - b.y));
-   return (dist <= LIMITE_VUE);
+   bool detecteParYeux = (sensorYeux != nullptr) ? sensorYeux->jeTeDetecte(autre) : false;
+   bool detecteParOreilles = (sensorOreilles != nullptr) ? sensorOreilles->jeTeDetecte(autre) : false;
+   return detecteParYeux || detecteParOreilles;
 }
 
 bool Bestiole::victoire(const Bestiole &autre)
@@ -145,3 +135,10 @@ void Bestiole::preUpdate(int minX, int minY) {}
 void Bestiole::update(int minX, int minY) {}
 void Bestiole::collide() {}
 bool Bestiole::see(int entity) {}
+double Bestiole::getMortProb() const {
+   return mortProb;
+}
+
+void Bestiole::setMortProb(double p) {
+   mortProb = p;
+}

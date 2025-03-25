@@ -61,6 +61,9 @@ public:
    void collide() override;
    bool see(int entity) override;
    
+   double getMortProb() const;
+   void setMortProb(double p);
+   
    friend bool operator==(const Bestiole &b1, const Bestiole &b2);
 };
 

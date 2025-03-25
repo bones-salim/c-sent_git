@@ -29,7 +29,7 @@ Carapace::~Carapace()
 void Carapace::applyEffect()
 {
     bestiole->setVitesse( bestiole->getVitesse() / eta );
-    bestiole->setDeathProb( bestiole->getDeathProb() / omega );
+    bestiole->setMortProb( bestiole->getMortProb() / omega );
 }
 
 void Carapace::drawEffect(UImg &support)
@@ -37,15 +37,6 @@ void Carapace::drawEffect(UImg &support)
     support.draw_circle(bestiole->x, bestiole->y, 15, couleur, 0.1);
 }
 
-void Carapace::detecter()
-{
-    // Non applicable pour un accessoire
-}
-
-bool Carapace::jeTeDetecte(const Bestiole &autre)
-{
-    return false;
-}
 
 Carapace* Carapace::clone(Bestiole* b) const
 {   

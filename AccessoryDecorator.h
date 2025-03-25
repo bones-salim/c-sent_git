@@ -1,40 +1,39 @@
-#ifndef _ACCESSORYDECORATOR_H_
-#define _ACCESSORYDECORATOR_H_
+#ifndef ACCESSOIRE_DECORATOR_H
+#define ACCESSOIRE_DECORATOR_H
 
-#include "BestioleDecorator.h"
+#include "Bestiole.h"
+#include "UImg.h"
 
-// Classe de base pour les décorateurs d'accessoires
-class AccessoryDecorator : public BestioleDecorator {
+/**
+ * @brief Interface abstraite pour les accessoires.
+ *
+ * Chaque accessoire décorateur modifie les attributs de la Bestiole (par exemple,
+ * la vitesse ou la probabilité de mort) et propose un rendu visuel.
+ */
+class AccessoireDecorator {
+protected:
+    Bestiole* bestiole; ///< Bestiole décorée
 public:
-    AccessoryDecorator(Bestiole* b);
-    virtual void ApplyEffect() = 0;
-    virtual void DrawEffect(UImg& support) = 0;
-    virtual Bestiole* clone() = 0;
+    AccessoireDecorator(Bestiole* b) : bestiole(b) {}
+    virtual ~AccessoireDecorator() {}
+    
+    /**
+     * @brief Applique l'effet de l'accessoire sur la Bestiole.
+     */
+    virtual void applyEffect() = 0;
+    
+    /**
+     * @brief Dessine l'effet visuel de l'accessoire sur le support graphique.
+     * @param support Référence vers le support UImg.
+     */
+    virtual void drawEffect(UImg &support) = 0;
+    
+    /**
+     * @brief Clone l'accessoire pour une nouvelle instance de Bestiole.
+     * @param b Nouvelle Bestiole à décorer.
+     * @return Pointeur sur le clone de l'accessoire.
+     */
+    virtual AccessoireDecorator* clone(Bestiole* b) const = 0;
 };
 
-
-// Accessoire Nageoires
-class Nageoires : public AccessoryDecorator {
-private:
-    double speedMult;
-
-public:
-    Nageoires(Bestiole* b, double speed);
-    void ApplyEffect() override;
-    void DrawEffect(UImg& support) override;
-    Bestiole* clone() override;
-};
-
-// Accessoire Camouflage
-class Camouflage : public AccessoryDecorator {
-private:
-    double psi;
-
-public:
-    Camouflage(Bestiole* b, double p);
-    void ApplyEffect() override;
-    void DrawEffect(UImg& support) override;
-    Bestiole* clone() override;
-};
-
-#endif // ACCESSORYDECORATOR_H
+#endif // ACCESSOIRE_DECORATOR_H

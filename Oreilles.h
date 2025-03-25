@@ -11,9 +11,6 @@ public:
     Oreilles(Bestiole* b, double delta, double capaciteDetection);
     virtual ~Oreilles();
 
-    // Méthode de détection (à adapter selon votre logique globale)
-    virtual void detecter() override;
-    
     // Méthode de clonage pour permettre la duplication de la chaîne de décorateurs
     virtual BestioleDecorator* clone() const override;
 

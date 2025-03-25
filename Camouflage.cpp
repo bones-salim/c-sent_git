@@ -22,15 +22,7 @@ void Camouflage::drawEffect(UImg &support)
     support.drawHalo(bestiole->x, bestiole->y, 25, efficaciteCamouflage);
 }
 
-void Camouflage::detecter()
-{
-    // Non applicable
-}
 
-bool Camouflage::jeTeDetecte(const Bestiole &autre)
-{
-    return false;
-}
 
 Camouflage* Camouflage::clone(Bestiole* b) const
 {
