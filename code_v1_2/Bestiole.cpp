@@ -29,6 +29,7 @@ Bestiole::Bestiole(const Bestiole &b): comportement(b.comportement ? b.comportem
     identite = ++next;
     std::cout << "const Bestiole (" << identite << ") par copie" << std::endl;
 
+<<<<<<< HEAD
     x = b.x + 1;
     y = b.y + 1;
     cumulX = cumulY = 0.;
@@ -36,6 +37,16 @@ Bestiole::Bestiole(const Bestiole &b): comportement(b.comportement ? b.comportem
     vitesse = b.vitesse;
     dureeVie = b.dureeVie;
     age = b.age;
+=======
+   x = b.x + 1;
+   y = b.y + 1;
+   cumulX = cumulY = 0.;
+   orientation = b.orientation;
+   vitesse = b.vitesse;
+   comportement = b.comportement;
+   dureeVie = b.dureeVie;
+   age=b.age;
+>>>>>>> 190583cf5849345e9f7cf7ae76a4d2235bc9af27
 
     couleur = new unsigned char[3];
     std::copy(b.couleur, b.couleur + 3, couleur);

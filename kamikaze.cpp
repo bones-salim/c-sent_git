@@ -1,25 +1,24 @@
 #include "Kamikaze.h"
 #include <vector>
 #include "Milieu.h"
+
 Kamikaze::Kamikaze(Bestiole *bestiole) : bestiole(bestiole)
 {
 }
-void Kamikaze::behave()
+void Kamikaze::behave(std::vector<Bestiole>& ListeBestiole)
 {
-    //bestiole->setCouleur(255, 0, 0);   // Red color for Kamikaze
-    // Identify the nearest bestiole and find it
-    Bestiole *target = getTarget();
+    Bestiole *target = getTarget(ListeBestiole);
     if ((target) ) 
     {
         chase(*target);
         
     }
 }
-Bestiole *Kamikaze::getTarget()
+Bestiole *Kamikaze::getTarget(std::vector<Bestiole>& ListeBestioles)
     {
         double minDistance=1000000;
         Bestiole* target=nullptr;
-        for (std::vector<Bestiole>::iterator it = listeBestioles.begin(); it != listeBestioles.end(); ++it)
+        for (std::vector<Bestiole>::iterator it = ListeBestioles.begin(); it != ListeBestioles.end(); ++it)
 
             if (bestiole->jeTeVois(*it))
             {
@@ -29,6 +28,7 @@ Bestiole *Kamikaze::getTarget()
                     minDistance = distance;
                     target = &(*it);
                 }
+
             }
         return target;
         }

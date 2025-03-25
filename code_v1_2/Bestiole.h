@@ -28,8 +28,10 @@ private:
    double cumulX, cumulY;
    double orientation;
    double vitesse;
+   double mortProb;
    int dureeVie;
    int age;
+   std::string nom;
    std::unique_ptr<Comportement> comportement;
    unsigned char* couleur;
 
@@ -44,7 +46,10 @@ public:
    void action(Milieu &monMilieu);
    void draw(UImg &support);
    int  get_age() const;
+   double getVitesse() const;
+   void setVitesse(double x);
    int  get_dureeVie() const;
+
    bool jeTeVois(const Bestiole &b) const;
 
    void initCoords(int xLim, int yLim);

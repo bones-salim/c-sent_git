@@ -17,10 +17,10 @@ class Kamikaze : public Comportement //heritage
     protected:
     public:
         Kamikaze(Bestiole *bestiole);
-        void behave() override;
+        void behave(std::vector<Bestiole>& ListeBestiole) override;
         virtual Comportement* clone(Bestiole *bestiole) const override;
         //reference vs pointers
-        Bestiole* getTarget();
+        Bestiole* getTarget(std::vector<Bestiole>& ListeBestiole);
         void chase(Bestiole& target);
         ~Kamikaze() = default;
         //change with new implementation

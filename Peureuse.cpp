@@ -1,61 +1,61 @@
-#include "Peureuse.h"
+#include "peureuse.h"
 #include <vector>
 #include "Milieu.h"
+#include <cmath>
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif  
 Peureuse::Peureuse(Bestiole *bestiole) : bestiole(bestiole)
-{
+{   regvit= bestiole->getVitesse();
+    speedmultiplier=1.5;
+    seuilPeur=5;
+    maxpeed=regvit*speedmultiplier;
+
 }
-void Peureuse::behave()
+void Peureuse::behave(std::vector<Bestiole>& ListeBestioles)
 {
-    //bestiole->setCouleur(255, 0, 0);   // x color for Peureuse
+    //bestiole->setCouleur( 0,255, 0);   // x color for Peureuse
     // Identify the nearest bestiole and find it
-    Bestiole *target = getTarget();
-    if ((target) ) 
+    // idea: we count the number of neighbours and if it's more than a certain number we run
+    int nbNeighbors= countNeighbors(ListeBestioles);
+    
+    if ( nbNeighbors > seuilPeur)
     {
-        // Move in order to collide with it
-        chase(target);
+        run();
     }
-}
-Bestiole *Kamikaze::getTarget()
+    else 
     {
-        double minDistance=1000000;
-        Bestiole* target=nullptr;
-        for (std::vector<Bestiole>::iterator it = listeBestioles.begin(); it != listeBestioles.end(); ++it)
+        bestiole->setVitesse(regvit);
+    }
+    
+  
+}
+int Peureuse::countNeighbors(std::vector<Bestiole>& ListeBestioles)
+    {
+        int nbNeighbors = 0;
+        for (std::vector<Bestiole>::iterator it = ListeBestioles.begin(); it != ListeBestioles.end(); ++it)
 
             if (bestiole->jeTeVois(*it))
             {
-                double distance = calculateDistance(*bestiole, *it);
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    target = &(*it);
-                }
+                nbNeighbors++;
             }
-        return target;
+        return nbNeighbors;
         }
         
-    
-void Kamikaze::chase(Bestiole *target)
-    {
-        double dx = target->getX() - bestiole->getX();
-        double dy = target->getY() - bestiole->getY();
-        double norm = sqrt(dx * dx + dy * dy);
-        if (norm>0)
-        {
-            dx = dx / norm;
-            dy = dy / norm;
-        }
-        double direction= -std::atan2(dy, dx); //angle inversed becasue it's in flipped coordinates
-        bestiole->setOrientation(direction);
-   
-    }
-double Kamikaze::calculateDistance(const Bestiole &b1, const Bestiole &b2)
-    {
-        double dx = b1.getX() - b2.getX();
-        double dy = b1.getY() - b2.getY();
-        return sqrt(dx * dx + dy * dy);
-    }
+void Peureuse::run()
+{   
+    double direction = bestiole->getOrientation();
+    bestiole->setOrientation(direction+M_PI);
+    bestiole->setVitesse(maxpeed);
 
-Comportement *Kamikaze::clone(Bestiole *bestiole) const
+
+}
+std::string getNom() const override { return "Peureuse"; }
+std::unique_ptr<Comportement> clone() const override {
+    return std::make_unique<Peureuse>(); // Copie
+}
+
+Comportement *Peureuse::clone(Bestiole *bestiole) const
 {
-    return new Kamikaze(bestiole);
+    return new Peureuse(bestiole);
 }

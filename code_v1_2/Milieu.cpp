@@ -4,12 +4,17 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+<<<<<<< HEAD
 #include <string>
 #include <typeindex>
 #include <algorithm>
 #include <random>
+=======
+>>>>>>> 190583cf5849345e9f7cf7ae76a4d2235bc9af27
 
+const T Milieu::white[] = { (T)255, (T)255, (T)255 };
 
+<<<<<<< HEAD
 const T Milieu::white[] = { (T)255, (T)255, (T)255 };
 
 Milieu::Milieu(int _width, int _height) : UImg(_width, _height, 1, 3), width(_width), height(_height),
@@ -21,6 +26,12 @@ Milieu::Milieu(int _width, int _height) : UImg(_width, _height, 1, 3), width(_wi
     bestioleConfig["Multiple"] = 0.1;
     bestioleConfig["Kamikaze"] = 0.1;
     std::cout << "const Milieu" << std::endl;
+=======
+Milieu::Milieu(int _width, int _height) : UImg(_width, _height, 1, 3), width(_width), height(_height)
+{
+    std::cout << "const Milieu" << std::endl;
+    std::srand(static_cast<unsigned int>(time(nullptr)));
+>>>>>>> 190583cf5849345e9f7cf7ae76a4d2235bc9af27
 }
 
 Milieu::~Milieu()
@@ -51,6 +62,7 @@ int Milieu::nbVoisins(const Bestiole& b)
 void Milieu::ajouterBestiole_clonage(Bestiole* b) {
    listeBestioles.push_back(std::unique_ptr<Bestiole>(b->clone()));
 }
+<<<<<<< HEAD
 
 void Milieu::naissance(){
     double p = dis(gen);
@@ -108,6 +120,14 @@ void Milieu::naissance(){
     }
 }
 
+=======
+void Milieu::naissance(){
+   
+}
+
+
+//mort_naturelle
+>>>>>>> 190583cf5849345e9f7cf7ae76a4d2235bc9af27
 void Milieu::supprimerBestiole(Bestiole* b) {
    if (b->get_age() >= b->get_dureeVie()) {
       listeBestioles.erase(std::remove_if(listeBestioles.begin(), listeBestioles.end(),
@@ -117,5 +137,8 @@ void Milieu::supprimerBestiole(Bestiole* b) {
    }
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 190583cf5849345e9f7cf7ae76a4d2235bc9af27

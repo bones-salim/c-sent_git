@@ -1,16 +1,27 @@
-#ifndef _CAMOUFLAGE_H_
-#define _CAMOUFLAGE_H_
+#ifndef CAMOUFLAGE_H
+#define CAMOUFLAGE_H
 
-// Accessoire Camouflage
-class Camouflage : public AccessoryDecorator {
-    private:
-        double psi;
-    
-    public:
-        Camouflage(Bestiole* b, double p);
-        void ApplyEffect() override;
-        void DrawEffect(UImg& support) override;
-        Bestiole* clone() override;
-    };
+#include "AccessoireDecorator.h"
 
-#endif
+/**
+ * @brief Décorateur pour ajouter un camouflage à une bestiole.
+ * Rend la bestiole plus difficile à détecter en modifiant sa capacité de camouflage.
+ */
+class Camouflage : public AccessoireDecorator {
+private:
+    double efficaciteCamouflage; // ψ
+public:
+    Camouflage(Bestiole* b, double efficaciteCamouflage);
+    virtual ~Camouflage();
+
+    virtual void applyEffect() override;
+    virtual void drawEffect(UImg &support) override;
+    virtual void detecter() override; // Non applicable
+    virtual bool jeTeDetecte(const Bestiole &autre) override; // Non applicable
+
+    virtual Camouflage* clone(Bestiole* b) const override;
+
+    virtual double getCamouflage() const override;
+};
+
+#endif // CAMOUFLAGE_H

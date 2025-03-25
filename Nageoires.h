@@ -1,16 +1,25 @@
-#ifndef _NAGEOIRES_H_
-#define _NAGEOIRES_H_
+#ifndef NAGEOIRES_H
+#define NAGEOIRES_H
 
-// Accessoire Nageoires
-class Nageoires : public AccessoryDecorator {
-    private:
-        double speedMult;
-    
-    public:
-        Nageoires(Bestiole* b, double speed);
-        void ApplyEffect() override;
-        void DrawEffect(UImg& support) override;
-        Bestiole* clone() override;
-    };
+#include "AccessoryDecorator.h"
 
-#endif
+/**
+ * @brief Décorateur pour ajouter des nageoires à une bestiole.
+ * Augmente la vitesse par un coefficient multiplicateur.
+ */
+class Nageoires : public AccessoireDecorator {
+private:
+    double coeffMultiplicateur; // ν
+public:
+    Nageoires(Bestiole* b, double coeffMultiplicateur);
+    virtual ~Nageoires();
+
+    virtual void applyEffect() override;
+    virtual void drawEffect(UImg &support) override;
+    virtual void detecter() override; // Non applicable
+    virtual bool jeTeDetecte(const Bestiole &autre) override; // Non applicable
+
+    virtual Nageoires* clone(Bestiole* b) const override;
+};
+
+#endif // NAGEOIRES_H
