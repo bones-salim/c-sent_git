@@ -11,6 +11,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+#include <BestioleDecorator.h>
 
 class Milieu;
 
@@ -38,7 +39,7 @@ private:
    BestioleDecorator* sensorYeux;
    BestioleDecorator* sensorOreilles;
 
-   void bouge(int xLim, int yLim);
+   
 
 public:
    Bestiole(std::unique_ptr<Comportement> comportement);
@@ -75,7 +76,7 @@ public:
    Comportement* getComportement() const;
    int  get_age() const;
    double getmortProb() const { return mortProb; };
-
+   std::string Bestiole::getNom ();
    void setX(int _x) { x = _x; };
    void setY(int _y) { y = _y; };
    void setCouleur(int r, int g, int b);
@@ -85,7 +86,7 @@ public:
    double setmortProb(double mortProb_){mortProb = mortProb_;};
    void setDureeVie(int dureeVie_){dureeVie = dureeVie_;};
    void setAge(int age_){age = age_;};
-   
+   void bouge(int xLim, int yLim);
    
    friend bool operator==(const Bestiole &b1, const Bestiole &b2);
 };

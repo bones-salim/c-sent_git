@@ -23,8 +23,8 @@ class Peureuse : public Comportement //heritage
     public:
         Peureuse(Bestiole *bestiole);
         void behave(std::vector<Bestiole>& ListeBestioles);
-        virtual std::string getNom() const = 0 ;
-        virtual std::unique_ptr<Comportement> clone() const = 0;
+        virtual std::string getNom() override  = 0 ;
+        virtual std::unique_ptr<Comportement> clone() override  = 0;
         ~Peureuse() = default;
         
 }
