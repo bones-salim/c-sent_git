@@ -12,7 +12,7 @@ Bestiole::Bestiole(std::unique_ptr<Comportement> comportement) : comportement(st
    std::cout << "const Bestiole (" << identite << ") par defaut" << std::endl;
 
    x = y = 0;
-   cumulX = cumulY = 0.;
+   cumulX = cumulY = 0.4;
    orientation = static_cast<double>(rand()) / RAND_MAX * 2. * M_PI;
    vitesse = static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE;
    dureeVie = 20;
@@ -102,11 +102,10 @@ void Bestiole::draw(UImg &support)
    support.draw_circle(xt, yt, AFF_SIZE / 2., couleur);
 }
 
-bool Bestiole::jeTeVois(const Bestiole &autre) const
+bool Bestiole::jeTeVois(const Bestiole &b) const
 {
-   bool detecteParYeux = (sensorYeux != nullptr) ? sensorYeux->jeTeDetecte(autre) : false;
-   bool detecteParOreilles = (sensorOreilles != nullptr) ? sensorOreilles->jeTeDetecte(autre) : false;
-   return detecteParYeux || detecteParOreilles;
+   double dist = std::sqrt((x - b.x) * (x - b.x) + (y - b.y) * (y - b.y));
+   return (dist <= LIMITE_VUE);
 }
 
 bool Bestiole::victoire(const Bestiole &autre)
@@ -128,17 +127,33 @@ int Bestiole::get_age() const {
    return this->age;
 }
 
-int  Bestiole::get_dureeVie() const{
-   return this->dureeVie;
+std::string Bestiole::getNom () {
+   return this->nom;
+}
+
+double  Bestiole::getVitesse() const {
+   return this->vitesse;
+}
+
+void  Bestiole::setVitesse(double x) {
+   this->vitesse = x ;
+}
+void Bestiole::collide() {
+   {
+      // Roll a dice to see if the Bestiole dies
+      double ran = static_cast<double>(std::rand()) / RAND_MAX;
+      if (ran > mortProb)
+      {
+         orientation = std::fmod(orientation + M_PI, 2 * M_PI);
+         
+      }
+      else
+      {
+         dureeVie= -1;
+      }
+   }
 }
 void Bestiole::preUpdate(int minX, int minY) {}
 void Bestiole::update(int minX, int minY) {}
 void Bestiole::collide() {}
 bool Bestiole::see(int entity) {}
-double Bestiole::getMortProb() const {
-   return mortProb;
-}
-
-void Bestiole::setMortProb(double p) {
-   mortProb = p;
-}

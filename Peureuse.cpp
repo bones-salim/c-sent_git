@@ -40,8 +40,7 @@ int Peureuse::countNeighbors(std::vector<Bestiole>& ListeBestioles)
                 nbNeighbors++;
             }
         return nbNeighbors;
-        }
-        
+    }       
 void Peureuse::run()
 {   
     double direction = bestiole->getOrientation();
@@ -50,12 +49,8 @@ void Peureuse::run()
 
 
 }
-std::string getNom() const override { return "Peureuse"; }
-std::unique_ptr<Comportement> clone() const override {
+std::string getNom()   { return "Peureuse"; }
+std::unique_ptr<Comportement> clone()  {
     return std::make_unique<Peureuse>(); // Copie
 }
 
-Comportement *Peureuse::clone(Bestiole *bestiole) const
-{
-    return new Peureuse(bestiole);
-}
