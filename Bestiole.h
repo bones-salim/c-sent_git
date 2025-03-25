@@ -1,62 +1,75 @@
-#ifndef BESTIOLE_H
-#define BESTIOLE_H
+#ifndef _BESTIOLES_H_
+#define _BESTIOLES_H_
+
 
 #include "UImg.h"
-#include "Comportement.h"
-#include "IBestiole.h"
-#include "Clonable.h"
-#include "Milieu.h"
-#include <memory>
-#include <string>
+
 #include <iostream>
-#include <cstdlib>
-#include <cmath>
+#include "Comportement.h"
+
+using namespace std;
+
 
 class Milieu;
 
-class Bestiole : public Interface_Bestiole, public Clonable
+
+class Bestiole
 {
-private:
-   static const double AFF_SIZE;
-   static const double MAX_VITESSE;
-   static const double LIMITE_VUE;
 
-   static int next;
+private :
+   static const double     AFF_SIZE;
+   static const double     MAX_VITESSE;
+   static const double     LIMITE_VUE;
 
-   int identite;
-   int x, y;
-   double cumulX, cumulY;
-   double orientation;
-   double vitesse;
-   int dureeVie;
-   int age;
-   std::unique_ptr<Comportement> comportement;
-   unsigned char* couleur;
+   static int              next;
 
-   void bouge(int xLim, int yLim);
+private :
+   int               identite;
+   int               x, y;
+   double            cumulX, cumulY;
+   double            orientation;
+   double            vitesse;
+   double            mortProb;
+   int               age;
+   int               dureeVie;
+   Comportement*     comportement;
 
-public:
-   Bestiole(std::unique_ptr<Comportement> comportement);
-   Bestiole(const Bestiole & b);
-   Bestiole(int initX, int initY);
-   ~Bestiole();
+   T               * couleur;
 
-   void action(Milieu &monMilieu);
-   void draw(UImg &support);
-   int  get_age() const;
-   int  get_dureeVie() const;
-   bool jeTeVois(const Bestiole &b) const;
+private :
+   void bouge( int xLim, int yLim );
 
-   void initCoords(int xLim, int yLim);
-   bool victoire(const Bestiole &autre);
-   Comportement* getComportement() const;
-   Bestiole* clone() const override;
-   void preUpdate(int minX, int minY) override;
-   void update(int minX, int minY) override;
-   void collide() override;
-   bool see(int entity) override;
-   
-   friend bool operator==(const Bestiole &b1, const Bestiole &b2);
+public :                                           // Forme canonique :
+   Bestiole( void );                               // Constructeur par defaut
+   Bestiole( const Bestiole & b );                 // Constructeur de copies
+   ~Bestiole( void );                              // Destructeur
+                                                   // Operateur d'affectation binaire par defaut
+   void action( Milieu & monMilieu );
+   void draw( UImg & support );
+
+   bool jeTeVois( const Bestiole & b ) const;
+   bool victoire( const Bestiole & autre );
+   void initCoords( int xLim, int yLim );
+
+   friend bool operator==( const Bestiole & b1, const Bestiole & b2 );
+   void setCouleur( int r, int g, int b );
+   //added
+   int getX() const { return x; };
+   Comportement* getComportement() const { return comportement; };
+   int getY() const { return y; };
+   int Bestiole::get_age() const {return this->age;};
+   void setX(int _x) { x = _x; };
+   void setY(int _y) { y = _y; };
+   void setOrientation(double o) { orientation = o; };
+   void setOrientation_cart(int x, int y){orientation = -std::atan2(y, x);};
+   double getOrientation() const { return orientation; };
+   void setVitesse(double v) { vitesse = v; };
+   double getVitesse() const { return vitesse; };
+   void collision();
+
+   double getMortProb() const { return mortProb; };
+
 };
 
-#endif // BESTIOLE_H
+
+#endif
