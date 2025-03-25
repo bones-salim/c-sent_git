@@ -45,21 +45,44 @@ public:
 
    void action(Milieu &monMilieu);
    void draw(UImg &support);
-   int  get_age() const;
-   double getVitesse() const;
-   void setVitesse(double x);
-   int  get_dureeVie() const;
+   
+   
+   
+   
 
    bool jeTeVois(const Bestiole &b) const;
 
    void initCoords(int xLim, int yLim);
    bool victoire(const Bestiole &autre);
-   Comportement* getComportement() const;
+   
    Bestiole* clone() const override;
    void preUpdate(int minX, int minY) override;
    void update(int minX, int minY) override;
    void collide() override;
    bool see(int entity) override;
+   
+   //getters and setters
+   int getX() const { return x; };
+   int getY() const { return y; };
+   double getOrientation() const { return orientation; };
+   int getDureeVie() const { return dureeVie; };
+   int getAge() const { return age; };
+   double getVitesse() const;
+   int  get_dureeVie() const;
+   Comportement* getComportement() const;
+   int  get_age() const;
+   double getmortProb() const { return mortProb; };
+
+   void setX(int _x) { x = _x; };
+   void setY(int _y) { y = _y; };
+   void setCouleur(int r, int g, int b);
+   void setOrientation(double o) { orientation = o; };
+   void setOrientation_cart(int x, int y){orientation = -std::atan2(y, x);};
+   void setVitesse(double x);
+   double setmortProb(double mortProb_){mortProb = mortProb_;};
+   void setDureeVie(int dureeVie_){dureeVie = dureeVie_;};
+   void setAge(int age_){age = age_;};
+   
    
    friend bool operator==(const Bestiole &b1, const Bestiole &b2);
 };
