@@ -116,6 +116,30 @@ void Milieu::supprimerBestiole(Bestiole* b) {
       }), listeBestioles.end());
    }
 }
+void Milieu::checkForCollisions()
+{
+    int collisionRange = 3;
+    for (auto it = listeBestioles.begin(); it != listeBestioles.end();)
+    {  
+        
+        for (auto it2 = listeBestioles.begin(); it2 != listeBestioles.end();)
+       {
+          if (std::abs((*it)->getX() - (*it2)->getX()) <= collisionRange)
+          {
+             if (std::abs((*it)->getY() - (*it2)->getY()) <= collisionRange)
+             {
+                if (*it != *it2)
+                {
+                   (*it)->collision();
+                   break;
+                }
+             }
+          }
+          ++it2;
+       }
+       ++it;
+    }
+ }
 
 
 

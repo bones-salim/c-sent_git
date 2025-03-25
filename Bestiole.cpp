@@ -1,4 +1,6 @@
 #include "Bestiole.h"
+#include "Comportement.h"
+#include <cmath>
 
 const double Bestiole::AFF_SIZE = 8.;
 const double Bestiole::MAX_VITESSE = 10.;
@@ -123,14 +125,21 @@ bool operator==(const Bestiole &b1, const Bestiole &b2)
    return (b1.identite == b2.identite);
 }
 
-int Bestiole::get_age() const {
-   return this->age;
-}
-
-int  Bestiole::get_dureeVie() const{
-   return this->dureeVie;
-}
 void Bestiole::preUpdate(int minX, int minY) {}
 void Bestiole::update(int minX, int minY) {}
-void Bestiole::collide() {}
+void Bestiole::collision() {
+   {
+      // Roll a dice to see if the Bestiole dies
+      double ran = static_cast<double>(std::rand()) / RAND_MAX;
+      if (ran > mortProb)
+      {
+         orientation = std::fmod(orientation + M_PI, 2 * M_PI);
+         d
+      }
+      else
+      {
+         dureeVie= -1;
+      }
+   }
+}
 bool Bestiole::see(int entity) {}

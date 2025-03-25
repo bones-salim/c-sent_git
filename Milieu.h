@@ -46,6 +46,7 @@ public:
     void ajouterBestiole_factory(Bestiole *b);
     void ajouterBestiole_clonage(Bestiole *b);
     void supprimerBestiole(Bestiole *b);
+    void checkForCollisions();
 };
 
 #endif // MILIEU_H
