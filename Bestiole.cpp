@@ -55,10 +55,10 @@ void Bestiole::initCoords(int xLim, int yLim)
    x = rand() % xLim;
    y = rand() % yLim;
 }
-
-Comportement* Bestiole::getComportement() const {
-   return comportement.get();
-}
+//                  Check Bestiole.h !!
+// Comportement* Bestiole::getComportement() const {
+//    return comportement.get();
+// }
 void Bestiole::bouge(int xLim, int yLim)
 {
    double nx, ny;
@@ -134,7 +134,6 @@ void Bestiole::collision() {
       if (ran > mortProb)
       {
          orientation = std::fmod(orientation + M_PI, 2 * M_PI);
-         d
       }
       else
       {
