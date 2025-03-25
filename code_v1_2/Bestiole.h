@@ -34,6 +34,9 @@ private:
    std::string nom;
    std::unique_ptr<Comportement> comportement;
    unsigned char* couleur;
+   // Pointeurs vers capteurs (décorateurs)
+   BestioleDecorator* sensorYeux;
+   BestioleDecorator* sensorOreilles;
 
    void bouge(int xLim, int yLim);
 
