@@ -12,7 +12,7 @@ public:
     Gregaire(double facteurAlign);
 
     // Appliquer le comportement grégaire à une bestiole
-    void appliquer(Bestiole& bestiole, const std::vector<Bestiole>& environnement) override;
+    void behave(const std::vector<Bestiole>& environnement) override;
 };
 
 #endif

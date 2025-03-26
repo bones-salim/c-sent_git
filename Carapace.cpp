@@ -34,7 +34,7 @@ void Carapace::applyEffect()
 
 void Carapace::drawEffect(UImg &support)
 {
-    support.draw_circle(bestiole->x, bestiole->y, 15, couleur, 0.1);
+    support.draw_circle(bestiole->getX(), bestiole->getY(), 15, couleur, 0.1);
 }
 
 

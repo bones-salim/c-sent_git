@@ -6,17 +6,17 @@ Gregaire::Gregaire(double facteurAlign) : facteurAlign(facteurAlign) {
 
 }
 
-void Gregaire::appliquer(Bestiole& b, const std::vector<Bestiole>& environnement) {
+void Gregaire::behave(const std::vector<Bestiole>& environnement) {
     double directionMoyenne = 0;
     int count = 0;
 
     for (const auto& bestiole : environnement) {
-        directionMoyenne += bestiole.orientation;
+        directionMoyenne += bestiole.getOrientation();
         count++;
     }
 
     if (count > 0) {
         directionMoyenne /= count;
-        b.direction = b.getOrientation() + facteurAlign * (directionMoyenne - b.direction);
+        b.setOrientation( b.getOrientation() + facteurAlign * (directionMoyenne - b.getOrientation()));
     }
 }
