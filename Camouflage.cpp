@@ -19,7 +19,7 @@ void Camouflage::applyEffect()
 void Camouflage::drawEffect(UImg &support)
 {
     // Dessiner un halo indiquant le camouflage
-    support.drawHalo(bestiole->x, bestiole->y, 25, efficaciteCamouflage);
+    support.drawHalo(bestiole->getX(), bestiole->getY(), 25, efficaciteCamouflage);
 }
 
 
@@ -29,7 +29,4 @@ Camouflage* Camouflage::clone(Bestiole* b) const
     return new Camouflage(b, efficaciteCamouflage);
 }
 
-double Camouflage::getCamouflage() const
-{
-    return efficaciteCamouflage;
-}
+
