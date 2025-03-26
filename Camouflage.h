@@ -19,7 +19,7 @@ public:
    
     virtual Camouflage* clone(Bestiole* b) const override;
 
-    virtual double getCamouflage() const override;
+    double getCamouflage() const ;
 };
 
 #endif // CAMOUFLAGE_H

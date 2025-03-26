@@ -83,7 +83,7 @@ public:
    void setOrientation(double o) { orientation = o; };
    void setOrientation_cart(int x, int y){orientation = -std::atan2(y, x);};
    void setVitesse(double x);
-   double setMortProb(double p) ;
+   void setMortProb(double p) ;
    void setDureeVie(int dureeVie_){dureeVie = dureeVie_;};
    void setAge(int age_){age = age_;};
    void bouge(int xLim, int yLim);
