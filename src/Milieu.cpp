@@ -139,7 +139,7 @@ void Milieu::checkForCollisions()
        }
        ++it;
     }
- }
+}
 
 
 
