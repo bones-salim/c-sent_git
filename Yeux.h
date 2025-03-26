@@ -19,7 +19,7 @@ public:
     Yeux(Bestiole* b, double alpha, double delta, double capaciteDetection);
     virtual ~Yeux();
 
-    virtual bool jeTeDetecte(const Bestiole &autre) override;
+    virtual bool jeTeDetecte(Bestiole &autre) override ;
     virtual SensorDecorator* clone(Bestiole* b) const override;
     
     /**

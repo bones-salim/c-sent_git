@@ -22,7 +22,7 @@ public:
      * @param autre La bestiole cible.
      * @return true si détectée, false sinon.
      */
-    virtual bool jeTeDetecte(const Bestiole &autre) = 0;
+    virtual bool jeTeDetecte( Bestiole &autre) = 0;
     
     /**
      * @brief Clone le capteur pour une nouvelle instance de Bestiole.

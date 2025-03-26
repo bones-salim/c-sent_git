@@ -19,7 +19,7 @@ public:
     // Vérifie si A entend B :
     // - B doit être dans la zone d'audition
     // - La capacité de détection de A (γo) doit être supérieure à la capacité de camouflage de B (ψ)
-    bool jeTeDetecte(const Bestiole& cible) const;
+    bool jeTeDetecte(Bestiole& cible) override;
 };
 
 #endif // OREILLES_H

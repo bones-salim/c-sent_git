@@ -11,7 +11,7 @@ Oreilles::~Oreilles() {
 
 
 
-BestioleDecorator *Oreilles::clone(Bestiole *b) const {
+SensorDecorator *Oreilles::clone(Bestiole *b) const {
     return new Oreilles(bestiole->clone(), delta, capaciteDetection);
 }
 
@@ -28,11 +28,11 @@ bool Oreilles::dansChampAudition(const Bestiole &cible) const
     return (distance <= delta);
 }
 
-bool Oreilles::jeTeDetecte(const Bestiole& cible) const {
+bool Oreilles::jeTeDetecte(Bestiole& cible) {
     // La cible doit être dans la zone auditive
     if (!dansChampAudition(cible)) {
         return false;
     }
     // La détection réussit si la capacité de détection des oreilles (γo) est supérieure à la capacité de camouflage de la cible (ψ)
-    return (capaciteDetection > cible.getCamouflage());
+    return (capaciteDetection > cible.getVisibilite());
 }

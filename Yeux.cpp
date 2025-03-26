@@ -21,10 +21,10 @@ bool Yeux::dansChampVision(const Bestiole &cible) const {
     return (angleDiff <= (alpha / 2.0));
 }
 
-bool Yeux::jeTeDetecte(const Bestiole &cible) {
+bool Yeux::jeTeDetecte(Bestiole &cible)  {
     if (!dansChampVision(cible))
         return false;
-    return (capaciteDetection > cible.getCamouflage());
+    return (capaciteDetection > cible.getVisibilite());
 }
 
 SensorDecorator* Yeux::clone(Bestiole* b) const {

@@ -34,6 +34,7 @@ private:
    double mortProb;
    int dureeVie;
    int age;
+   double Visibilite;
    std::string nom;
    std::unique_ptr<Comportement> comportement;
    unsigned char* couleur;
@@ -78,6 +79,8 @@ public:
    int  get_age() const;
    double getMortProb() const ;
    std::string Bestiole::getNom ();
+   double getVisibilite(){ return Visibilite; };
+   void setVisibilite(double x){Visibilite = x ;};
    void setX(int _x) { x = _x; };
    void setY(int _y) { y = _y; };
    void setCouleur(int r, int g, int b);
