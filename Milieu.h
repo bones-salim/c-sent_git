@@ -16,7 +16,7 @@
 #include <map>
 #include <memory>
 #include <random>
-class Milieu : public UImg
+class Milieu : public UImg , public Createur_Bestiole
 {
 private:
     static const T white[];

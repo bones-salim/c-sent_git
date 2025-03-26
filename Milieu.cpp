@@ -98,7 +98,7 @@ void Milieu::naissance(){
     
         std::unique_ptr<Comportement> comp = creerComportement(comportementChoisi);
         
-        Bestiole* newBestiole = Createur_Bestiole::creerBestiole(comp);
+        Bestiole* newBestiole = Createur_Bestiole::creerBestiole(std::move(comp));
    
         if (newBestiole) {
             listeBestioles.push_back(std::unique_ptr<Bestiole>(newBestiole));
@@ -130,7 +130,7 @@ void Milieu::checkForCollisions()
              {
                 if (*it != *it2)
                 {
-                   (*it)->collision();
+                   (*it)->collide();
                    break;
                 }
              }

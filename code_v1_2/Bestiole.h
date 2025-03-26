@@ -3,6 +3,7 @@
 
 #include "UImg.h"
 #include "Comportement.h"
+#include "SensorDecorator.h"
 #include "IBestiole.h"
 #include "Clonable.h"
 #include "Milieu.h"
@@ -11,7 +12,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
-#include <BestioleDecorator.h>
+
 
 class Milieu;
 
@@ -36,8 +37,8 @@ private:
    std::unique_ptr<Comportement> comportement;
    unsigned char* couleur;
    // Pointeurs vers capteurs (décorateurs)
-   BestioleDecorator* sensorYeux;
-   BestioleDecorator* sensorOreilles;
+   SensorDecorator* sensorYeux;
+   SensorDecorator* sensorOreilles;
 
    
 

@@ -3,7 +3,7 @@
 
 #include "SensorDecorator.h"
 
-class Oreilles : public CapteurDecorator {
+class Oreilles : public SensorDecorator {
 private:
     double delta;             // Distance maximale de détection par les oreilles (δo)
     double capaciteDetection;   // γo, capacité de détection par les oreilles (entre 0 et 1)
@@ -12,8 +12,7 @@ public:
     virtual ~Oreilles();
 
     // Méthode de clonage pour permettre la duplication de la chaîne de décorateurs
-    virtual BestioleDecorator* clone() const override;
-
+    virtual SensorDecorator* clone(Bestiole* b) const override;
     // Vérifie si la bestiole cible est dans la zone d'audition (omnidirectionnelle)
     bool dansChampAudition(const Bestiole& cible) const;
 
