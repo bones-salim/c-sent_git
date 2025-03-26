@@ -4,6 +4,7 @@
 #include "UImg.h"
 #include "Comportement.h"
 #include "SensorDecorator.h"
+#include "AccessoireDecorator.h"
 #include "IBestiole.h"
 #include "Clonable.h"
 #include "Milieu.h"
@@ -36,9 +37,8 @@ private:
    std::string nom;
    std::unique_ptr<Comportement> comportement;
    unsigned char* couleur;
-   // Pointeurs vers capteurs (décorateurs)
-   SensorDecorator* sensorYeux;
-   SensorDecorator* sensorOreilles;
+   std::vector<std::unique_ptr<SensorDecorator>> listedescapteurs;
+   std::vector<std::unique_ptr<AccessoireDecorator>> listedesaccessoires;
 
    
 

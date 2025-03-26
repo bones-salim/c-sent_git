@@ -104,12 +104,13 @@ void Bestiole::draw(UImg &support)
 
 
 bool Bestiole::jeTeVois(const Bestiole &autre) const {
-   for (const auto& SensorDecorator: listedescapteurs) {
-         bool detecte1 = SensorDecorator->jeTeDetecte(autre);
-         if (detecte1) return (True) ;
-     }
-     return (False);
-  }
+   for (const auto& capteur : listedescapteurs) { // Changer le nom pour éviter confusion
+       if (capteur->jeTeDetecte(autre)) {
+           return true; // `true` en C++
+       }
+   }
+   return false; // `false` en C++
+}
       
 
 bool Bestiole::victoire(const Bestiole &autre)

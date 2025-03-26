@@ -5,7 +5,7 @@
 class Interface_Bestiole {
 private:
 std::vector<std::unique_ptr<SensorDecorator>> listedescapteurs;
-std::vector<std::unique_ptr<AccessoireDecorator>> listedescapteurs;
+std::vector<std::unique_ptr<AccessoireDecorator>> listedesaccessoires;
 public:
     virtual void draw(UImg& support) = 0;
     virtual void preUpdate(int minX, int minY) = 0;
