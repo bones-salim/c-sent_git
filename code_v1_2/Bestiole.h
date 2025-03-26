@@ -68,6 +68,7 @@ public:
    bool see(int entity) override;
    
    //getters and setters
+   
    int getX() const { return x; };
    int getY() const { return y; };
    double getOrientation() const { return orientation; };

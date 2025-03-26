@@ -28,11 +28,34 @@ bool Oreilles::dansChampAudition(const Bestiole &cible) const
     return (distance <= delta);
 }
 
-bool Oreilles::jeTeDetecte(Bestiole& cible) {
+bool Oreilles::jeTeDetecte(Bestiole &cible) {
     // La cible doit être dans la zone auditive
     if (!dansChampAudition(cible)) {
         return false;
     }
     // La détection réussit si la capacité de détection des oreilles (γo) est supérieure à la capacité de camouflage de la cible (ψ)
     return (capaciteDetection > cible.getVisibilite());
+}
+
+void Oreilles::drawEffect(UImg &support) {
+    // Récupération de la position et orientation via les getters
+    int x = bestiole->getX();
+    int y = bestiole->getY();
+    double orientation = bestiole->getOrientation();
+
+    // On définit des constantes de dimensionnement pour l'oreille
+    double base = Bestiole::AFF_SIZE / 2.0;
+    double height = Bestiole::AFF_SIZE / 1.5;
+
+    // Calcul des coordonnées d'un triangle représentant une oreille
+    int x1 = x + static_cast<int>(cos(orientation - M_PI/2) * base);
+    int y1 = y - static_cast<int>(sin(orientation - M_PI/2) * base);
+    int x2 = x1 + static_cast<int>(cos(orientation) * height);
+    int y2 = y1 - static_cast<int>(sin(orientation) * height);
+    int x3 = x1 + static_cast<int>(cos(orientation + M_PI/6) * base);
+    int y3 = y1 - static_cast<int>(sin(orientation + M_PI/6) * base);
+
+    // Couleur noire pour les oreilles
+    unsigned char noir[3] = {0, 0, 0};
+    support.draw_triangle(x1, y1, x2, y2, x3, y3, noir);
 }

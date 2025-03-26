@@ -20,6 +20,8 @@ public:
     // - B doit être dans la zone d'audition
     // - La capacité de détection de A (γo) doit être supérieure à la capacité de camouflage de B (ψ)
     bool jeTeDetecte(Bestiole& cible) override;
+    void Oreilles::drawEffect(UImg &support);
+
 };
 
 #endif // OREILLES_H

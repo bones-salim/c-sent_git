@@ -21,7 +21,9 @@ public:
 
     virtual bool jeTeDetecte(Bestiole &autre) override ;
     virtual SensorDecorator* clone(Bestiole* b) const override;
-    
+
+    void drawEffect(UImg &support);
+
     /**
      * @brief Vérifie si la cible se trouve dans le champ de vision.
      * @param cible La bestiole cible.
