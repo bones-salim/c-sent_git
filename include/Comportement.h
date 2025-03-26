@@ -12,7 +12,7 @@ class Comportement
         virtual void behave(std::vector<Bestiole>& ListeBestiole) = 0;
         virtual ~Comportement() = default;
       virtual std::string getNom() =0;
-      virtual std::unique_ptr<Comportement> clone() const = 0;
+      virtual std::unique_ptr<Comportement> clone() = 0;
       virtual std::string getNom() =0;
     } ;
 #endif
