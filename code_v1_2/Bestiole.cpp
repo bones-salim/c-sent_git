@@ -153,6 +153,13 @@ void Bestiole::collide() {
       }
    }
 }
+double Bestiole::getMortProb() const {
+   return this->mortProb;
+}
+
+void Bestiole::setMortProb(double p)  {
+   this->mortProb = p;
+}
 void Bestiole::preUpdate(int minX, int minY) {}
 void Bestiole::update(int minX, int minY) {}
 void Bestiole::collide() {}

@@ -1,7 +1,7 @@
 #ifndef NAGEOIRES_H
 #define NAGEOIRES_H
 
-#include "AccessoryDecorator.h"
+#include "AccessoireDecorator.h"
 
 /**
  * @brief Décorateur pour ajouter des nageoires à une bestiole.

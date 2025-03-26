@@ -75,7 +75,7 @@ public:
    int  get_dureeVie() const;
    Comportement* getComportement() const;
    int  get_age() const;
-   double getmortProb() const { return mortProb; };
+   double getMortProb() const ;
    std::string Bestiole::getNom ();
    void setX(int _x) { x = _x; };
    void setY(int _y) { y = _y; };
@@ -83,7 +83,7 @@ public:
    void setOrientation(double o) { orientation = o; };
    void setOrientation_cart(int x, int y){orientation = -std::atan2(y, x);};
    void setVitesse(double x);
-   double setmortProb(double mortProb_){mortProb = mortProb_;};
+   double setMortProb(double p) ;
    void setDureeVie(int dureeVie_){dureeVie = dureeVie_;};
    void setAge(int age_){age = age_;};
    void bouge(int xLim, int yLim);

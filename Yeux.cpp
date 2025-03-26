@@ -8,13 +8,13 @@ Yeux::Yeux(Bestiole* b, double alpha, double delta, double capaciteDetection)
 Yeux::~Yeux() { }
 
 bool Yeux::dansChampVision(const Bestiole &cible) const {
-    double dx = static_cast<double>(cible.x - bestiole->x);
-    double dy = static_cast<double>(cible.y - bestiole->y);
+    double dx = static_cast<double>(cible.getX() - bestiole->getX());
+    double dy = static_cast<double>(cible.getY() - bestiole->getY());
     double distance = std::sqrt(dx * dx + dy * dy);
     if (distance > delta)
         return false;
     double angleToCible = std::atan2(dy, dx);
-    double orientation = bestiole->orientation;
+    double orientation = bestiole->getOrientation();
     double angleDiff = std::fabs(angleToCible - orientation);
     if (angleDiff > M_PI)
         angleDiff = 2 * M_PI - angleDiff;
