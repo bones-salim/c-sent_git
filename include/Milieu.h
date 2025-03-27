@@ -37,6 +37,7 @@ public:
 
     int getWidth() const { return width; }
     int getHeight() const { return height; }
+    size_t getPopulationSize() const { return listeBestioles.size(); }
 
     void step();
     int nbVoisins(const Bestiole& b) ;
