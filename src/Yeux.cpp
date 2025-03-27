@@ -38,8 +38,8 @@ void Yeux::drawEffect(UImg &support) {
     double orientation = bestiole->getOrientation();
     
     // On se base sur AFF_SIZE pour dimensionner les yeux (AFF_SIZE étant une constante statique)
-    double eyeRadius = Bestiole::AFF_SIZE / 4.0;
-    double offset = Bestiole::AFF_SIZE;  // distance entre le centre et la position des yeux
+    double eyeRadius = bestiole->getAFF_SIZE() / 4.0;
+    double offset = bestiole->getAFF_SIZE();  // distance entre le centre et la position des yeux
     double angleOffset = M_PI / 6.0;       // 30° d'écart pour chaque œil
 
     // Calcul des positions pour l'œil gauche et droit

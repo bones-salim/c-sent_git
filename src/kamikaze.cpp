@@ -1,4 +1,4 @@
-#include "Kamikaze.h"
+#include "kamikaze.h"
 #include <vector>
 #include "Milieu.h"
 
@@ -55,7 +55,7 @@ double Kamikaze::calculateDistance(const Bestiole &b1, const Bestiole &b2)
         return sqrt(dx * dx + dy * dy);
     }
 
-Comportement *Kamikaze::clone(Bestiole *bestiole) const
-{
-    return new Kamikaze(bestiole);
-}
+std::unique_ptr<Comportement> clone()  {
+        return std::make_unique<Kamikaze>(); // Copie
+    }
+    

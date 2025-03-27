@@ -10,6 +10,9 @@
 #include <random>
 #include <Oreilles.h>
 #include <Yeux.h>
+#include <Nageoires.h>
+#include <Carapace.h>
+#include <Camouflage.h>
 
 
 const T Milieu::white[] = { (T)255, (T)255, (T)255 };
@@ -20,8 +23,8 @@ Milieu::Milieu(int _width, int _height) : UImg(_width, _height, 1, 3), width(_wi
     bestioleConfig["Peureuse"] = 0.2;
     bestioleConfig["Grégaire"] = 0.3;
     bestioleConfig["Prévoyante"] = 0.3;
-    bestioleConfig["Multiple"] = 0.1;
-    bestioleConfig["Kamikaze"] = 0.1;
+    bestioleConfig["Multiple"] = 0;
+    bestioleConfig["Kamikaze"] = 0.2;
     std::cout << "const Milieu" << std::endl;
 }
 
@@ -107,6 +110,8 @@ void Milieu::naissance(){
         } else {
             std::cout << "Erreur : Impossible de créer une bestiole !" << std::endl;
         }
+        attribuerCapteurs(newBestiole);
+        attribuerAccessoires(newBestiole);
     }
 }
 
@@ -142,7 +147,7 @@ void Milieu::checkForCollisions()
        ++it;
     }
 }
-void attribuerCapteurs(Bestiole& b) {
+void attribuerCapteurs(Bestiole* b) {
     // Générer un nombre aléatoire de capteurs (par exemple entre 1 et 3)
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -167,13 +172,43 @@ void attribuerCapteurs(Bestiole& b) {
         // Choisir aléatoirement entre Yeux ou Oreilles
         std::uniform_int_distribution<int> capteurDis(0, 1);
         if (capteurDis(gen) == 0) {
-            b.listedescapteurs.push_back(std::make_unique<Yeux>(alpha, delta_y, capaciteDetection_y));
+            b->listedescapteurs.push_back(std::make_unique<Yeux>(alpha, delta_y, capaciteDetection_y));
         } else {
-            b.listedescapteurs.push_back(std::make_unique<Oreilles>(delta_o, capaciteDetection_o));
+            b->listedescapteurs.push_back(std::make_unique<Oreilles>(delta_o, capaciteDetection_o));
         }
     } else if (nbCapteurs == 2) {
-        b.listedescapteurs.push_back(std::make_unique<Yeux>(alpha, delta_y, capaciteDetection_y));
-        b.listedescapteurs.push_back(std::make_unique<Oreilles>(delta_o, capaciteDetection_o));
+        b->listedescapteurs.push_back(std::make_unique<Yeux>(alpha, delta_y, capaciteDetection_y));
+        b->listedescapteurs.push_back(std::make_unique<Oreilles>(delta_o, capaciteDetection_o));
+    }
+}
+
+
+void attribuerAccessoires(Bestiole* b) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dis(0, 2);  // Nombre d'accessoires entre 0 et 2
+
+    // Distribution pour les attributs des accessoires
+    std::uniform_real_distribution<> distribVitesse(1.0, 3.0);  // Coefficient de vitesse
+    std::uniform_real_distribution<> distribProbabilite(0.5, 1.0);  // Réduction probabilité de mort
+    std::uniform_real_distribution<> distribCamouflage(0.0, 1.0);  // Capacité de camouflage
+
+    // Créer un tableau pour les types d'accessoires disponibles
+    std::vector<int> accessoiresDisponibles = {0, 1, 2};  // 0: Nageoires, 1: Carapace, 2: Camouflage
+    std::shuffle(accessoiresDisponibles.begin(), accessoiresDisponibles.end(), gen);  // Mélanger les indices
+
+    int nbAccessoires = dis(gen);  // Nombre aléatoire d'accessoires à attribuer
+
+    for (int i = 0; i < nbAccessoires; ++i) {
+        int typeAccessoire = accessoiresDisponibles[i];  // Tirer un accessoire du tableau mélangé
+
+        if (typeAccessoire == 0) {
+            b->listedesaccessoires.push_back(std::make_unique<Nageoires>(distribVitesse(gen)));
+        } else if (typeAccessoire == 1) {
+            b->listedesaccessoires.push_back(std::make_unique<Carapace>(distribProbabilite(gen), distribVitesse(gen)));
+        } else {
+            b->listedesaccessoires.push_back(std::make_unique<Camouflage>(distribCamouflage(gen)));
+        }
     }
 }
 

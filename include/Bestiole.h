@@ -74,6 +74,7 @@ public:
    double getMortProb() const;
    std::string getNom() const;
    double getVisibilite() const { return Visibilite; };
+   double getAFF_SIZE() const {return AFF_SIZE;};
    void setVisibilite(double x) { Visibilite = x; };
    void setX(int _x) { x = _x; };
    void setY(int _y) { y = _y; };

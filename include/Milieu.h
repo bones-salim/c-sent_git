@@ -47,7 +47,9 @@ public:
     void ajouterBestiole_clonage(Bestiole *b);
     void supprimerBestiole(Bestiole *b);
     void checkForCollisions();
-    void attribuerCapteurs(Bestiole& b);
+    void attribuerCapteurs(Bestiole* b);
+    void attribuerAccessoires(Bestiole* b);
+
 };
 
 #endif // MILIEU_H

@@ -18,7 +18,7 @@ class Kamikaze : public Comportement //heritage
     public:
         Kamikaze(Bestiole *bestiole);
         void behave(std::vector<Bestiole>& ListeBestiole) override;
-        virtual Comportement* clone(Bestiole *bestiole) const override;
+        virtual std::unique_ptr<Comportement> clone()  override;
         //reference vs pointers
         Bestiole* getTarget(std::vector<Bestiole>& ListeBestiole);
         void chase(Bestiole& target);

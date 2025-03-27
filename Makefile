@@ -1,15 +1,20 @@
-main : main.cpp Aquarium.o Bestiole.o Milieu.o
-	g++ -Wall -std=c++11 -o main main.cpp Aquarium.o Bestiole.o Milieu.o -I . -lX11 -lpthread
+CXX := g++
+CXXFLAGS := -std=c++11 -Wall
+SRC_DIR := src
+BUILD_DIR := build
+SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
+OBJECTS := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SOURCES))
+TARGET := test_program
 
-Aquarium.o : Aquarium.h Aquarium.cpp
-	g++ -Wall -std=c++11  -c Aquarium.cpp -I .
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-Bestiole.o : Bestiole.h Bestiole.cpp
-	g++ -Wall -std=c++11  -c Bestiole.cpp -I .
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-Milieu.o : Milieu.h Milieu.cpp
-	g++ -Wall -std=c++11  -c Milieu.cpp -I .
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
+.PHONY: clean
 clean:
-	rm -rf *.o main
-
+	rm -rf $(BUILD_DIR) $(TARGET)
