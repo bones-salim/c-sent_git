@@ -17,7 +17,7 @@
 const T Milieu::white[] = { (T)255, (T)255, (T)255 };
 
 Milieu::Milieu(int _width, int _height) : UImg(_width, _height, 1, 3), width(_width), height(_height),
-    gen(std::random_device()()), dis(0.0, 1.0)
+    gen(std::random_device()()), dis(0.0, 1.0) ,taux_Naissance(0.1)
 {
     bestioleConfig["Peureuse"] = 0.2;
     bestioleConfig["Grégaire"] = 0.3;
@@ -25,6 +25,8 @@ Milieu::Milieu(int _width, int _height) : UImg(_width, _height, 1, 3), width(_wi
     bestioleConfig["Multiple"] = 0;
     bestioleConfig["Kamikaze"] = 0.2;
     std::cout << "const Milieu" << std::endl;
+    std::cout << "const Milieu: " << _width << " x " << _height << std::endl;
+
 }
 
 Milieu::~Milieu()
@@ -59,25 +61,25 @@ void Milieu::ajouterBestiole_clonage(Bestiole* b) {
 void Milieu::naissance(){
     double p = dis(gen);
     if (p < taux_Naissance) {
+        // Calculer les probabilités de comportements à partir de la population actuelle
         auto calculerProbabilites = [](const std::vector<std::unique_ptr<Bestiole>>& listeBestioles) {
             std::map<std::string, int> compteur;
             int total = listeBestioles.size();
-        
             for (const auto& bestiole : listeBestioles) {
                 if (bestiole->getComportement()) {
                     compteur[bestiole->getComportement()->getNom()]++;
                 }
             }
-        
             std::map<std::string, double> probabilites;
             for (const auto& [nom, count] : compteur) {
                 probabilites[nom] = static_cast<double>(count) / total;
             }
-        
             return probabilites;
         };
-        
-        auto choisirComportement = [](const std::map<std::string, double>& probabilites, const std::map<std::string, double>& bestioleConfig) {
+
+        // Choisir le comportement à affecter en fonction des probabilités et de la configuration attendue
+        auto choisirComportement = [](const std::map<std::string, double>& probabilites,
+                                        const std::map<std::string, double>& bestioleConfig) -> std::string {
             for (const auto& [nom, prob] : probabilites) {
                 auto it = bestioleConfig.find(nom);
                 if (it != bestioleConfig.end() && prob < it->second) {
@@ -87,43 +89,36 @@ void Milieu::naissance(){
             return std::string();
         };
 
+        // Créer le comportement en fonction du nom choisi
         auto creerComportement = [](const std::string& nom, Bestiole* b) -> std::unique_ptr<Comportement> {
             if (nom == "Peureuse") return std::make_unique<Peureuse>(b);
-            if (nom == "Grégaire") return std::make_unique<Gregaire>(0.5,b);
+            if (nom == "Grégaire") return std::make_unique<Gregaire>(0.5, b);
             if (nom == "Prévoyante") return std::make_unique<Prevoyante>(b);
-            //if (nom == "Multiple") return std::make_unique<PersonnalitesMultiples>(b);
+            // if (nom == "Multiple") return std::make_unique<PersonnalitesMultiples>(b);
             if (nom == "Kamikaze") return std::make_unique<Kamikaze>(b);
             return nullptr;
         };
-        
 
+        // Calculer les probabilités sur la population actuelle
         std::map<std::string, double> probabilites = calculerProbabilites(listeBestioles);
-    
+        // Choisir le comportement à affecter
         std::string comportementChoisi = choisirComportement(probabilites, bestioleConfig);
-        // Création de la bestiole sans comportement
+
+        // Créer une nouvelle bestiole via la factory
         Createur_Bestiole createur;
         Bestiole* newBestiole = createur.creerBestiole(nullptr);
         if (newBestiole) {
-            // Créer le comportement en passant le pointeur vers la bestiole
+            // Créer et affecter le comportement
             std::unique_ptr<Comportement> comp = creerComportement(comportementChoisi, newBestiole);
-            // Affecter le comportement à la bestiole (en supposant l'existence d'une méthode setComportement)
             newBestiole->setComportement(std::move(comp));
+            // Attribuer capteurs et accessoires
+            attribuerCapteurs(newBestiole);
+            attribuerAccessoires(newBestiole);
+            // Ajouter la bestiole dans la liste (une seule fois)
             listeBestioles.push_back(std::unique_ptr<Bestiole>(newBestiole));
         } else {
             std::cout << "Erreur : Impossible de créer une bestiole !" << std::endl;
         }
-        attribuerCapteurs(newBestiole);
-        attribuerAccessoires(newBestiole);
-
-        //Bestiole* newBestiole = Createur_Bestiole::creerBestiole(std::move(comp));
-   
-        if (newBestiole) {
-            listeBestioles.push_back(std::unique_ptr<Bestiole>(newBestiole));
-        } else {
-            std::cout << "Erreur : Impossible de créer une bestiole !" << std::endl;
-        }
-        attribuerCapteurs(newBestiole);
-        attribuerAccessoires(newBestiole);
     }
 }
 
