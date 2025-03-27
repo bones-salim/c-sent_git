@@ -8,6 +8,8 @@
 #include <typeindex>
 #include <algorithm>
 #include <random>
+#include <Oreilles.h>
+#include <Yeux.h>
 
 
 const T Milieu::white[] = { (T)255, (T)255, (T)255 };
@@ -140,6 +142,46 @@ void Milieu::checkForCollisions()
        ++it;
     }
 }
+void attribuerCapteurs(Bestiole& b) {
+    // Générer un nombre aléatoire de capteurs (par exemple entre 1 et 3)
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dis(0, 2); // Changez 3 si vous voulez un nombre max différent de 3
+    int nbCapteurs = dis(gen);
+
+    std::uniform_real_distribution<> distribAlpha(0.0, 3.14); // alpha entre 0 et pi
+    std::uniform_real_distribution<> distribDelta(10.0, 100.0); // distance entre 10 et 100
+    std::uniform_real_distribution<> distribCapacite(0.0, 1.0); // capacité entre 0 et 1
+
+    double alpha = distribAlpha(gen);
+    double delta_y = distribDelta(gen);
+    double capaciteDetection_y = distribCapacite(gen);
+
+    std::uniform_real_distribution<> distribDelta(10.0, 100.0); // distance entre 10 et 100
+    std::uniform_real_distribution<> distribCapacite(0.0, 1.0); // capacité entre 0 et 1
+
+    double delta_o = distribDelta(gen);
+    double capaciteDetection_o = distribCapacite(gen);
+
+    if (nbCapteurs == 1) {
+        // Choisir aléatoirement entre Yeux ou Oreilles
+        std::uniform_int_distribution<int> capteurDis(0, 1);
+        if (capteurDis(gen) == 0) {
+            b.listedescapteurs.push_back(std::make_unique<Yeux>(alpha, delta_y, capaciteDetection_y));
+        } else {
+            b.listedescapteurs.push_back(std::make_unique<Oreilles>(delta_o, capaciteDetection_o));
+        }
+    } else if (nbCapteurs == 2) {
+        b.listedescapteurs.push_back(std::make_unique<Yeux>(alpha, delta_y, capaciteDetection_y));
+        b.listedescapteurs.push_back(std::make_unique<Oreilles>(delta_o, capaciteDetection_o));
+    }
+}
+
+    
+
+
+    
+
 
 
 

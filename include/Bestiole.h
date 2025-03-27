@@ -37,10 +37,10 @@ private:
    std::string nom;
    std::unique_ptr<Comportement> comportement;
    unsigned char* couleur;
-   std::vector<std::unique_ptr<SensorDecorator>> listedescapteurs;
-   std::vector<std::unique_ptr<AccessoireDecorator>> listedesaccessoires;
 
 public:
+   std::vector<std::unique_ptr<SensorDecorator>> listedescapteurs;
+   std::vector<std::unique_ptr<AccessoireDecorator>> listedesaccessoires;
    Bestiole();
    Bestiole(std::unique_ptr<Comportement> comportement);
    Bestiole(const Bestiole & b);
@@ -50,7 +50,7 @@ public:
    void action(Milieu &monMilieu);
    void draw(UImg &support);
 
-   bool jeTeVois(const Bestiole &b) const;
+   bool jeTeVois(Bestiole &b) const;
 
    void initCoords(int xLim, int yLim);
    bool victoire(const Bestiole &autre);
