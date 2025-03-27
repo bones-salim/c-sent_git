@@ -1,6 +1,5 @@
 #include "Milieu.h"
 #include "Createur_Bestiole.h"
-#include "Bestiole.cpp"
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -88,22 +87,35 @@ void Milieu::naissance(){
             return std::string();
         };
 
-        auto creerComportement = [](const std::string& nom) -> std::unique_ptr<Comportement> {
-            if (nom == "Peureuse") return std::make_unique<Peureuse>();
-            if (nom == "Grégaire") return std::make_unique<Gregaire>();
-            if (nom == "Prévoyante") return std::make_unique<Prevoyante>();
-            if (nom == "Multiple") return std::make_unique<PersonnalitesMultiples>();
-            if (nom == "Kamikaze") return std::make_unique<Kamikaze>();
+        auto creerComportement = [](const std::string& nom, Bestiole* b) -> std::unique_ptr<Comportement> {
+            if (nom == "Peureuse") return std::make_unique<Peureuse>(b);
+            if (nom == "Grégaire") return std::make_unique<Gregaire>(0.5,b);
+            if (nom == "Prévoyante") return std::make_unique<Prevoyante>(b);
+            //if (nom == "Multiple") return std::make_unique<PersonnalitesMultiples>(b);
+            if (nom == "Kamikaze") return std::make_unique<Kamikaze>(b);
             return nullptr;
         };
+        
 
         std::map<std::string, double> probabilites = calculerProbabilites(listeBestioles);
     
         std::string comportementChoisi = choisirComportement(probabilites, bestioleConfig);
-    
-        std::unique_ptr<Comportement> comp = creerComportement(comportementChoisi);
-        
-        Bestiole* newBestiole = Createur_Bestiole::creerBestiole(std::move(comp));
+        // Création de la bestiole sans comportement
+        Createur_Bestiole createur;
+        Bestiole* newBestiole = createur.creerBestiole(nullptr);
+        if (newBestiole) {
+            // Créer le comportement en passant le pointeur vers la bestiole
+            std::unique_ptr<Comportement> comp = creerComportement(comportementChoisi, newBestiole);
+            // Affecter le comportement à la bestiole (en supposant l'existence d'une méthode setComportement)
+            newBestiole->setComportement(std::move(comp));
+            listeBestioles.push_back(std::unique_ptr<Bestiole>(newBestiole));
+        } else {
+            std::cout << "Erreur : Impossible de créer une bestiole !" << std::endl;
+        }
+        attribuerCapteurs(newBestiole);
+        attribuerAccessoires(newBestiole);
+
+        //Bestiole* newBestiole = Createur_Bestiole::creerBestiole(std::move(comp));
    
         if (newBestiole) {
             listeBestioles.push_back(std::unique_ptr<Bestiole>(newBestiole));
@@ -116,7 +128,7 @@ void Milieu::naissance(){
 }
 
 void Milieu::supprimerBestiole(Bestiole* b) {
-   if (b->get_age() >= b->get_dureeVie()) {
+   if (b->get_age() >= b->getDureeVie()) {
       listeBestioles.erase(std::remove_if(listeBestioles.begin(), listeBestioles.end(),
       [b](const std::unique_ptr<Bestiole>& bestiolePtr) {
           return bestiolePtr.get() == b;
@@ -147,7 +159,7 @@ void Milieu::checkForCollisions()
        ++it;
     }
 }
-void attribuerCapteurs(Bestiole* b) {
+void Milieu::attribuerCapteurs(Bestiole* b) {
     // Générer un nombre aléatoire de capteurs (par exemple entre 1 et 3)
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -162,8 +174,8 @@ void attribuerCapteurs(Bestiole* b) {
     double delta_y = distribDelta(gen);
     double capaciteDetection_y = distribCapacite(gen);
 
-    std::uniform_real_distribution<> distribDelta(10.0, 100.0); // distance entre 10 et 100
-    std::uniform_real_distribution<> distribCapacite(0.0, 1.0); // capacité entre 0 et 1
+    //std::uniform_real_distribution<> distribDelta(20.0, 200.0); // distance entre 10 et 100
+   // std::uniform_real_distribution<> distribCapacite(0.0, 1.1); // capacité entre 0 et 1
 
     double delta_o = distribDelta(gen);
     double capaciteDetection_o = distribCapacite(gen);
@@ -172,18 +184,18 @@ void attribuerCapteurs(Bestiole* b) {
         // Choisir aléatoirement entre Yeux ou Oreilles
         std::uniform_int_distribution<int> capteurDis(0, 1);
         if (capteurDis(gen) == 0) {
-            b->listedescapteurs.push_back(std::make_unique<Yeux>(alpha, delta_y, capaciteDetection_y));
+            b->listedescapteurs.push_back(std::make_unique<Yeux>(b, alpha, delta_y, capaciteDetection_y));
         } else {
-            b->listedescapteurs.push_back(std::make_unique<Oreilles>(delta_o, capaciteDetection_o));
+            b->listedescapteurs.push_back(std::make_unique<Oreilles>(b, delta_o, capaciteDetection_o));
         }
     } else if (nbCapteurs == 2) {
-        b->listedescapteurs.push_back(std::make_unique<Yeux>(alpha, delta_y, capaciteDetection_y));
-        b->listedescapteurs.push_back(std::make_unique<Oreilles>(delta_o, capaciteDetection_o));
+        b->listedescapteurs.push_back(std::make_unique<Yeux>(b, alpha, delta_y, capaciteDetection_y));
+        b->listedescapteurs.push_back(std::make_unique<Oreilles>(b, delta_o, capaciteDetection_o));
     }
 }
 
 
-void attribuerAccessoires(Bestiole* b) {
+void Milieu::attribuerAccessoires(Bestiole* b) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(0, 2);  // Nombre d'accessoires entre 0 et 2
@@ -203,11 +215,11 @@ void attribuerAccessoires(Bestiole* b) {
         int typeAccessoire = accessoiresDisponibles[i];  // Tirer un accessoire du tableau mélangé
 
         if (typeAccessoire == 0) {
-            b->listedesaccessoires.push_back(std::make_unique<Nageoires>(distribVitesse(gen)));
+            b->listedesaccessoires.push_back(std::make_unique<Nageoires>(b, distribVitesse(gen)));
         } else if (typeAccessoire == 1) {
-            b->listedesaccessoires.push_back(std::make_unique<Carapace>(distribProbabilite(gen), distribVitesse(gen)));
+            b->listedesaccessoires.push_back(std::make_unique<Carapace>(b, distribProbabilite(gen), distribVitesse(gen)));
         } else {
-            b->listedesaccessoires.push_back(std::make_unique<Camouflage>(distribCamouflage(gen)));
+            b->listedesaccessoires.push_back(std::make_unique<Camouflage>(b,distribCamouflage(gen)));
         }
     }
 }

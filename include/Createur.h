@@ -5,7 +5,7 @@
 class Createur {
 public:
     virtual ~Createur() {}
-    virtual Bestiole* creerBestiole(std::unique_ptr<Comportement>) = 0;
+    virtual Bestiole* creerBestiole(std::unique_ptr<Comportement>)=0 ;
 };
 
 #endif

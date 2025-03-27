@@ -8,11 +8,8 @@
 #include <cmath>
 
 Carapace::Carapace(Bestiole* b, double eta, double omega)
+    : AccessoireDecorator(b), eta(eta), omega(omega)
 {
-    this->bestiole = b;
-    this->eta = eta;
-    this->omega = omega;
-
     couleur = new unsigned char[3];
     couleur[0] = 255; // Rouge
     couleur[1] = 0;

@@ -1,4 +1,6 @@
 #include "Oreilles.h"
+#include "Bestiole.h"
+
 #include <cmath>
 
 // Constructeur
@@ -44,8 +46,8 @@ void Oreilles::drawEffect(UImg &support) {
     double orientation = bestiole->getOrientation();
 
     // On définit des constantes de dimensionnement pour l'oreille
-    double base = Bestiole::AFF_SIZE / 2.0;
-    double height = Bestiole::AFF_SIZE / 1.5;
+    double base = bestiole->getAFF_SIZE() / 2.0;
+    double height = bestiole->getAFF_SIZE() / 1.5;
 
     // Calcul des coordonnées d'un triangle représentant une oreille
     int x1 = x + static_cast<int>(cos(orientation - M_PI/2) * base);

@@ -1,25 +1,32 @@
-#include "peureuse.h"
+#include "Peureuse.h"
 #include <vector>
 #include "Milieu.h"
 #include <cmath>
+
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif  
-Peureuse::Peureuse(Bestiole *bestiole) : bestiole(bestiole)
-{   regvit= bestiole->getVitesse();
-    speedmultiplier=1.5;
-    seuilPeur=5;
-    maxpeed=regvit*speedmultiplier;
 
-}
-void Peureuse::behave(std::vector<Bestiole>& ListeBestioles)
+Peureuse::Peureuse(Bestiole *bestiole) : bestiole(bestiole)
 {
-    //bestiole->setCouleur( 0,255, 0);   // x color for Peureuse
-    // Identify the nearest bestiole and find it
-    // idea: we count the number of neighbours and if it's more than a certain number we run
-    int nbNeighbors= countNeighbors(ListeBestioles);
-    
-    if ( nbNeighbors > seuilPeur)
+    regvit = bestiole->getVitesse();
+    speedmultiplier = 1.5;
+    seuilPeur = 5;
+    maxpeed = regvit * speedmultiplier;
+}
+
+// Constructeur de copie
+Peureuse::Peureuse(const Peureuse& other)
+    : bestiole(other.bestiole), regvit(other.regvit), speedmultiplier(other.speedmultiplier), 
+      maxpeed(other.maxpeed), seuilPeur(other.seuilPeur) {}
+
+void Peureuse::behave(Milieu& milieu, std::vector<Bestiole>& ListeBestiole)
+{
+    if (!bestiole) return;  // Vérification pour éviter un crash
+
+    int nbNeighbors = milieu.nbVoisins(*bestiole);
+
+    if (nbNeighbors > seuilPeur)
     {
         run();
     }
@@ -27,30 +34,20 @@ void Peureuse::behave(std::vector<Bestiole>& ListeBestioles)
     {
         bestiole->setVitesse(regvit);
     }
-    
-  
 }
-int Peureuse::countNeighbors(std::vector<Bestiole>& ListeBestioles)
-    {
-        int nbNeighbors = 0;
-        for (std::vector<Bestiole>::iterator it = ListeBestioles.begin(); it != ListeBestioles.end(); ++it)
 
-            if (bestiole->jeTeVois(*it))
-            {
-                nbNeighbors++;
-            }
-        return nbNeighbors;
-    }       
 void Peureuse::run()
 {   
+    if (!bestiole) return;  // Vérification pour éviter un crash
+
     double direction = bestiole->getOrientation();
-    bestiole->setOrientation(direction+M_PI);
+    bestiole->setOrientation(direction + M_PI);
     bestiole->setVitesse(maxpeed);
-
-
 }
-std::string getNom()   { return "Peureuse"; }
-std::unique_ptr<Comportement> clone()  {
-    return std::make_unique<Peureuse>(); // Copie
+
+// Correction de clone()
+std::unique_ptr<Comportement> Peureuse::clone() {
+    return std::make_unique<Peureuse>(*this);  
 }
+
 

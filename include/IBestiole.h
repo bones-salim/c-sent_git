@@ -11,7 +11,6 @@ public:
     virtual void preUpdate(int minX, int minY) = 0;
     virtual void update(int minX, int minY) = 0;
     virtual void collide() = 0;
-    virtual bool see(int entity) = 0;
 };
 
 #endif

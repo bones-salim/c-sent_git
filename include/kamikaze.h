@@ -17,15 +17,19 @@ class Kamikaze : public Comportement //heritage
     protected:
     public:
         Kamikaze(Bestiole *bestiole);
-        void behave(std::vector<Bestiole>& ListeBestiole) override;
+        void behave(Milieu& milieu, std::vector<Bestiole>& ListeBestiole) override;
         virtual std::unique_ptr<Comportement> clone()  override;
         //reference vs pointers
         Bestiole* getTarget(std::vector<Bestiole>& ListeBestiole);
         void chase(Bestiole& target);
         ~Kamikaze() = default;
+        std::string getNom() override;
         //change with new implementation
         double calculateDistance(const Bestiole &b1, const Bestiole &b2);
 
 }
 ;
 #endif
+
+
+

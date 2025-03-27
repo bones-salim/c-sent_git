@@ -1,8 +1,9 @@
 #ifndef ACCESSOIRE_DECORATOR_H
 #define ACCESSOIRE_DECORATOR_H
 
-#include "Bestiole.h"
 #include "UImg.h"
+
+class Bestiole; // Forward declaration
 
 /**
  * @brief Interface abstraite pour les accessoires.

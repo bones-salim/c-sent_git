@@ -3,7 +3,7 @@
 #include <cmath>
 
 Camouflage::Camouflage(Bestiole* b, double efficaciteCamouflage)
-    : AccessoireDecorator(b), efficaciteCamouflage(efficaciteCamouflage)
+    : AccessoireDecorator(b), efficaciteCamouflage(efficaciteCamouflage=0)
 {
     applyEffect();
 }
@@ -19,7 +19,7 @@ void Camouflage::applyEffect()
 void Camouflage::drawEffect(UImg &support)
 {
     // Dessiner un halo indiquant le camouflage
-    support.drawHalo(bestiole->getX(), bestiole->getY(), 25, efficaciteCamouflage);
+    //support.drawHalo(bestiole->getX(), bestiole->getY(), 25, efficaciteCamouflage);
 }
 
 

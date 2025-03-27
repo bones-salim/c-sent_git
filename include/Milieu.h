@@ -3,21 +3,21 @@
 
 #include "UImg.h"
 #include "Bestiole.h"
-#include "Createur_Bestiole.h"
 #include "Comportement.h"
 #include "Gregaire.h"
 #include "peureuse.h"
 #include  "Prevoyante.h"
 #include "kamikaze.h"
-#include "PersonnalitesMultiples.h"
+//#include "PersonnalitesMultiples.h"
+
+class Createur_Bestiole;  // Déclaration avancée
 
 #include <iostream>
 #include <vector>
 #include <map>
 #include <memory>
 #include <random>
-class Milieu : public UImg , public Createur_Bestiole
-{
+class Milieu : public UImg  {
 private:
     static const T white[];
     int width;

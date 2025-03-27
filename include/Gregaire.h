@@ -2,17 +2,24 @@
 #define GREGAIRE_H
 
 #include "Comportement.h"
+#include <memory>
+#include <string>
+#include <vector>
+
+class Bestiole;
+class Milieu;
 
 class Gregaire : public Comportement {
 private:
+    Bestiole* bestiole; 
     double facteurAlign;  // Facteur d'alignement pour ajuster la direction
-
 public:
-    // Constructeur prenant un facteur d'alignement
-    Gregaire(double facteurAlign);
+    // Le constructeur n'a plus de valeur par défaut, les deux paramètres sont requis.
+    Gregaire(double facteurAlign, Bestiole* bestiole);
 
-    // Appliquer le comportement grégaire à une bestiole
-    void behave(const std::vector<Bestiole>& environnement) override;
+    void behave(Milieu& milieu, std::vector<Bestiole>& environnement) override;
+    std::string getNom() override;
+    std::unique_ptr<Comportement> clone() override;
 };
 
 #endif

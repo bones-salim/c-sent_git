@@ -17,7 +17,6 @@ Bestiole::Bestiole(std::unique_ptr<Comportement> comportement) : comportement(st
    vitesse = static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE;
    dureeVie = 20;
    age=10;
-
    couleur = new unsigned char[3];
    couleur[0] = static_cast<unsigned char>(rand() % 230);
    couleur[1] = static_cast<unsigned char>(rand() % 230);
@@ -103,7 +102,7 @@ void Bestiole::draw(UImg &support)
 }
 
 
-bool Bestiole::jeTeVois(const Bestiole &autre) const {
+bool Bestiole::jeTeVois(Bestiole &autre) const {
    for (const auto& capteur : listedescapteurs) { // Changer le nom pour éviter confusion
        if (capteur->jeTeDetecte(autre)) {
            return true; // `true` en C++
@@ -132,7 +131,7 @@ int Bestiole::get_age() const {
    return this->age;
 }
 
-std::string Bestiole::getNom () {
+std::string Bestiole::getNom() const {
    return this->nom;
 }
 
@@ -165,7 +164,10 @@ double Bestiole::getMortProb() const {
 void Bestiole::setMortProb(double p)  {
    this->mortProb = p;
 }
+void Bestiole::setComportement(std::unique_ptr<Comportement> comp) {
+   comportement = std::move(comp);
+}
 void Bestiole::preUpdate(int minX, int minY) {}
 void Bestiole::update(int minX, int minY) {}
-void Bestiole::collide() {}
-bool Bestiole::see(int entity) {}
+unsigned char Bestiole::getcouleur() const {
+   return (couleur != nullptr) ? couleur[0] : 0;}

@@ -44,7 +44,7 @@ public:
      * @param orientation Orientation de la bestiole (non utilisé ici).
      * @param support Référence vers le support graphique UImg.
      */
-    virtual void drawEffect(int x, int y, double orientation, UImg &support) override;
+    virtual void drawEffect(UImg &support) override;
 
     /**
      * @brief Clone la carapace pour une autre bestiole.

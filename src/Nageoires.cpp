@@ -18,8 +18,10 @@ void Nageoires::applyEffect()
 
 void Nageoires::drawEffect(UImg &support)
 {
-    support.drawText(bestiole->getX(), bestiole->getY() - 10, "Nageoires", bestiole->getcouleur());
+    unsigned char couleur[3] = { bestiole->getcouleur(), bestiole->getcouleur(), bestiole->getcouleur() };
+    support.draw_text(bestiole->getX(), bestiole->getY() - 10, "Nageoires", couleur);
 }
+
 Nageoires* Nageoires::clone(Bestiole* b) const
 {
     return new Nageoires(b, coeffMultiplicateur);

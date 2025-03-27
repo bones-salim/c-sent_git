@@ -1,8 +1,9 @@
 #ifndef SENSOR_DECORATOR_H
 #define SENSOR_DECORATOR_H
 
-#include "Bestiole.h"
 #include "UImg.h"
+// Remplacer l'inclusion par une déclaration anticipée :
+class Bestiole;
 
 /**
  * @brief Interface abstraite pour les capteurs.
@@ -16,14 +17,14 @@ protected:
 public:
     SensorDecorator(Bestiole* b) : bestiole(b) {}
     virtual ~SensorDecorator() {}
-    
+
     /**
      * @brief Détermine si le capteur détecte une bestiole cible.
      * @param autre La bestiole cible.
      * @return true si détectée, false sinon.
      */
-    virtual bool jeTeDetecte( Bestiole &autre) = 0;
-    
+    virtual bool jeTeDetecte(Bestiole &autre) = 0;
+
     /**
      * @brief Clone le capteur pour une nouvelle instance de Bestiole.
      * @param b Nouvelle Bestiole à décorer.

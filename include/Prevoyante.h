@@ -2,14 +2,22 @@
 #define PREVOYANTE_H
 
 #include "Comportement.h"
+#include <memory>
+#include <string>
+#include <vector>
+
+class Bestiole;
+class Milieu;
 
 class Prevoyante : public Comportement {
 private:
-    double margeEsquive;
-
+    Bestiole* bestiole;
 public:
-    Prevoyante(double margeEsquive);
-    void appliquer(Bestiole& bestiole, const std::vector<Bestiole>& environnement) override;
+    Prevoyante(Bestiole* bestiole);
+
+    void behave(Milieu& milieu, std::vector<Bestiole>& environnement) override;
+    std::string getNom() override;
+    std::unique_ptr<Comportement> clone() override;
 };
 
 #endif

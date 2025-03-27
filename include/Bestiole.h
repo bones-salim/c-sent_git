@@ -1,10 +1,9 @@
 #ifndef BESTIOLE_H
 #define BESTIOLE_H
-
+#include "AccessoireDecorator.h"
 #include "UImg.h"
 #include "Comportement.h"
 #include "SensorDecorator.h"
-#include "AccessoireDecorator.h"
 #include "IBestiole.h"
 #include "Clonable.h"
 #include "Milieu.h"
@@ -59,7 +58,6 @@ public:
    void preUpdate(int minX, int minY) override;
    void update(int minX, int minY) override;
    void collide() override;
-   bool see(int entity) override;
 
    // Getters et setters
    int getX() const { return x; };
@@ -70,7 +68,9 @@ public:
    double getVitesse() const;
    int get_dureeVie() const;
    Comportement* getComportement() const;
+
    int get_age() const;
+   unsigned char getcouleur() const ;
    double getMortProb() const;
    std::string getNom() const;
    double getVisibilite() const { return Visibilite; };
@@ -86,7 +86,7 @@ public:
    void setDureeVie(int dureeVie_) { dureeVie = dureeVie_; };
    void setAge(int age_) { age = age_; };
    void bouge(int xLim, int yLim);
-
+   void setComportement(std::unique_ptr<Comportement> comp) ;
    friend bool operator==(const Bestiole &b1, const Bestiole &b2);
 };
 
