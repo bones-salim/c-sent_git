@@ -36,12 +36,27 @@ Milieu::~Milieu()
 
 void Milieu::step()
 {
-    cimg_forXY(*this, x, y) fillC(x, y, 0, white[0], white[1], white[2]);
+    // Remplit toute l'image avec du blanc
+    this->fill(255);
+
+    // Dessine un carré rouge au centre pour tester
+    int cx = width / 2;
+    int cy = height / 2;
+    for (int x = cx - 20; x < cx + 20; ++x) {
+        for (int y = cy - 20; y < cy + 20; ++y) {
+            (*this)(x, y, 0, 0) = 255; // Rouge
+            (*this)(x, y, 0, 1) = 0;   // Vert
+            (*this)(x, y, 0, 2) = 0;   // Bleu
+        }
+    }
+
+    // Appelle ensuite l'action et le dessin de chaque bestiole
     for (auto& bestiole : listeBestioles) {
-      bestiole->action(*this);
-      bestiole->draw(*this);
-  }
+        bestiole->action(*this);
+        bestiole->draw(*this);
+    }
 }
+
 
 int Milieu::nbVoisins(const Bestiole& b)
 {

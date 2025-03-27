@@ -8,7 +8,7 @@
 int main() {
     const int N = 1000;  // Nombre total d'étapes de simulation
     // Création de l'écosystème avec une taille d'aquarium (largeur, hauteur) et éventuellement un pas de temps
-    Aquarium ecosysteme(640, 480, 1000);
+    Aquarium ecosysteme(640, 480, 10);
     
     // Initialisation : création d'une population de départ (par exemple, 50 bestioles)
     for (int i = 0; i < 50; ++i) {
