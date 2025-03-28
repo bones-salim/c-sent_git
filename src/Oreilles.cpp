@@ -46,8 +46,8 @@ void Oreilles::drawEffect(UImg &support) {
     double orientation = bestiole->getOrientation();
 
     // On définit des constantes de dimensionnement pour l'oreille
-    double base = bestiole->getAFF_SIZE() / 2.0;
-    double height = bestiole->getAFF_SIZE() / 1.5;
+    double base = bestiole->getAFF_SIZE()  ;
+    double height = bestiole->getAFF_SIZE()  ;
 
     // Calcul des coordonnées d'un triangle représentant une oreille
     int x1 = x + static_cast<int>(cos(orientation - M_PI/2) * base);
@@ -58,6 +58,6 @@ void Oreilles::drawEffect(UImg &support) {
     int y3 = y1 - static_cast<int>(sin(orientation + M_PI/6) * base);
 
     // Couleur noire pour les oreilles
-    unsigned char noir[3] = {0, 0, 0};
-    support.draw_triangle(x1, y1, x2, y2, x3, y3, noir);
+    unsigned char blanc[3] = {255, 255, 255};
+    support.draw_triangle(x1, y1, x2, y2, x3, y3, blanc);
 }

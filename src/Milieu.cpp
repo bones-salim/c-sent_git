@@ -50,15 +50,7 @@ void Milieu::step()
 {
     // Remplir l'image de blanc et dessiner le carré de test...
     this->fill(255);
-    int cx = width / 2;
-    int cy = height / 2;
-    for (int x = cx - 20; x < cx + 20; ++x) {
-        for (int y = cy - 20; y < cy + 20; ++y) {
-            (*this)(x, y, 0, 0) = 255; // Rouge
-            (*this)(x, y, 0, 1) = 0;   // Vert
-            (*this)(x, y, 0, 2) = 0;   // Bleu
-        }
-    }
+
 
     // Phase 1 : mettre à jour et dessiner toutes les bestioles
     for (auto& bestiole : listeBestioles) {
