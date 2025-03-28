@@ -10,8 +10,8 @@ Bestiole::Bestiole(std::unique_ptr<Comportement> comportement) : comportement(st
 {
    identite = ++next;
    std::cout << "const Bestiole (" << identite << ") par defaut" << std::endl;
-
-   x = y = 0;
+   mortProb = 0.5; 
+   x = y = 2;
    cumulX = cumulY = 0.4;
    orientation = static_cast<double>(rand()) / RAND_MAX * 2. * M_PI;
    vitesse = static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE;
@@ -23,7 +23,8 @@ Bestiole::Bestiole(std::unique_ptr<Comportement> comportement) : comportement(st
    couleur[2] = static_cast<unsigned char>(rand() % 230);
 }
 
-Bestiole::Bestiole(const Bestiole &b): comportement(b.comportement ? b.comportement->clone() : nullptr) 
+Bestiole::Bestiole(const Bestiole &b)
+    : comportement(nullptr)  // On initialise à nullptr
 {
     identite = ++next;
     std::cout << "const Bestiole (" << identite << ") par copie" << std::endl;
@@ -38,7 +39,11 @@ Bestiole::Bestiole(const Bestiole &b): comportement(b.comportement ? b.comportem
 
     couleur = new unsigned char[3];
     std::copy(b.couleur, b.couleur + 3, couleur);
+
+
 }
+
+
 
 
 Bestiole::~Bestiole()
@@ -51,6 +56,11 @@ void Bestiole::initCoords(int xLim, int yLim)
 {
    x = rand() % xLim;
    y = rand() % yLim;
+}
+
+
+void Bestiole::dessiner(UImg &support) {
+   support.draw_circle(x, y, 5, this->couleur);
 }
 
 Comportement* Bestiole::getComportement() const {
@@ -87,17 +97,34 @@ void Bestiole::bouge(int xLim, int yLim)
    }
 }
 
+
+void Bestiole::setCouleur(int r, int g, int b) {
+   couleur[0] = static_cast<unsigned char>(r);
+   couleur[1] = static_cast<unsigned char>(g);
+   couleur[2] = static_cast<unsigned char>(b);
+}
+
 void Bestiole::action(Milieu &monMilieu)
 {
    bouge(monMilieu.getWidth(), monMilieu.getHeight());
 }
 void Bestiole::draw(UImg &support)
 {
-    //std::cout << "Bestiole dessinee en (" << x << ", " << y << ")" << std::endl;
     double xt = x + cos(orientation) * AFF_SIZE / 2.1;
     double yt = y - sin(orientation) * AFF_SIZE / 2.1;
+
     support.draw_ellipse(x, y, AFF_SIZE, AFF_SIZE / 5., -orientation / M_PI * 180., couleur);
     support.draw_circle(xt, yt, AFF_SIZE / 2., couleur);
+
+    // Dessiner les accessoires
+    for (const auto& accessoire : listedesaccessoires) {
+        accessoire->drawEffect(support);
+    }
+
+    // Dessiner les capteurs
+    for (const auto& capteur : listedescapteurs) {
+        capteur->drawEffect(support);
+    }
 }
 
 

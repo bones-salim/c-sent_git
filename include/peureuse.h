@@ -1,33 +1,34 @@
 #ifndef PEUREUSE_H
 #define PEUREUSE_H
-
 #include <cmath>
 #include "Bestiole.h"
 #include "Comportement.h"
-
 class Bestiole;
 
-class Peureuse : public Comportement
+class Peureuse : public Comportement //heritage
 {
-private:
-    double regvit;
-    double speedmultiplier;
-    double maxpeed;
-    Bestiole *bestiole;
-    int seuilPeur;
 
-    void run();
-
-public:
-    Peureuse(Bestiole *bestiole);
-    Peureuse(const Peureuse& other);
+    private:
+        double regvit;
+        double speedmultiplier;
+        double maxpeed;
+        Bestiole *bestiole;
+        int seuilPeur;
+        bool panic();
+        void run();
+       
     
-    std::string getNom() override { return "Peureuse"; }
-    std::unique_ptr<Comportement> clone() override;
-    
-    ~Peureuse() = default;
-    void behave(Milieu& milieu, std::vector<Bestiole>& ListeBestiole) override;
-};
+    protected:
+    public:
+        Peureuse(Bestiole *bestiole);
+        virtual void behave(std::vector<std::unique_ptr<Bestiole>>& listeBestioles);
+        virtual std::string getNom() const override  ;
+        std::unique_ptr<Comportement> clone(Bestiole* bestiole) const override;
 
-#endif  // PEUREUSE_H
+        int countNeighbors(std::vector<std::unique_ptr<Bestiole>>& listeBestioles);
+        ~Peureuse() = default;
+        
+}
+;
+#endif
 

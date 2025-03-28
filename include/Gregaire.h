@@ -17,9 +17,10 @@ public:
     // Le constructeur n'a plus de valeur par défaut, les deux paramètres sont requis.
     Gregaire(double facteurAlign, Bestiole* bestiole);
 
-    void behave(Milieu& milieu, std::vector<Bestiole>& environnement) override;
-    std::string getNom() override;
-    std::unique_ptr<Comportement> clone() override;
+    void behave( std::vector<std::unique_ptr<Bestiole>>& environnement);
+    std::string getNom() const override;
+    std::unique_ptr<Comportement> clone(Bestiole* bestiole) const override;
+
 };
 
 #endif

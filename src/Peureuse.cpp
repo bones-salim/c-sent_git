@@ -8,24 +8,19 @@
 #endif  
 
 Peureuse::Peureuse(Bestiole *bestiole) : bestiole(bestiole)
-{
+{   
     regvit = bestiole->getVitesse();
     speedmultiplier = 1.5;
     seuilPeur = 5;
     maxpeed = regvit * speedmultiplier;
 }
 
-// Constructeur de copie
-Peureuse::Peureuse(const Peureuse& other)
-    : bestiole(other.bestiole), regvit(other.regvit), speedmultiplier(other.speedmultiplier), 
-      maxpeed(other.maxpeed), seuilPeur(other.seuilPeur) {}
-
-void Peureuse::behave(Milieu& milieu, std::vector<Bestiole>& ListeBestiole)
+void Peureuse::behave(std::vector<std::unique_ptr<Bestiole>>& listeBestioles)
 {
-    if (!bestiole) return;  // Vérification pour éviter un crash
+    bestiole->setCouleur(0, 255, 0);   // Couleur verte pour Peureuse
 
-    int nbNeighbors = milieu.nbVoisins(*bestiole);
-
+    int nbNeighbors = countNeighbors(listeBestioles);
+    
     if (nbNeighbors > seuilPeur)
     {
         run();
@@ -36,18 +31,33 @@ void Peureuse::behave(Milieu& milieu, std::vector<Bestiole>& ListeBestiole)
     }
 }
 
+int Peureuse::countNeighbors(std::vector<std::unique_ptr<Bestiole>>& listeBestioles)
+{
+    int nbNeighbors = 0;
+    for (auto& it : listeBestioles)
+    {
+        if (bestiole != it.get() && bestiole->jeTeVois(*it))
+        {
+            nbNeighbors++;
+        }
+    }
+    return nbNeighbors;
+}       
+
 void Peureuse::run()
 {   
-    if (!bestiole) return;  // Vérification pour éviter un crash
-
     double direction = bestiole->getOrientation();
     bestiole->setOrientation(direction + M_PI);
     bestiole->setVitesse(maxpeed);
 }
 
-// Correction de clone()
-std::unique_ptr<Comportement> Peureuse::clone() {
-    return std::make_unique<Peureuse>(*this);  
+std::string  Peureuse::getNom() const 
+{ 
+    return "Peureuse"; 
+}
+
+std::unique_ptr<Comportement> Peureuse::clone(Bestiole* bestiole) const {
+    return std::make_unique<Peureuse>(bestiole);
 }
 
 

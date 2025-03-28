@@ -5,7 +5,7 @@
 #include "Bestiole.h"
 #include "Comportement.h"
 #include "Gregaire.h"
-#include "peureuse.h"
+#include "Peureuse.h"
 #include  "Prevoyante.h"
 #include "kamikaze.h"
 //#include "PersonnalitesMultiples.h"
@@ -38,7 +38,7 @@ public:
     int getWidth() const { return width; }
     int getHeight() const { return height; }
     size_t getPopulationSize() const { return listeBestioles.size(); }
-
+    void dessiner(UImg &support);
     void step();
     int nbVoisins(const Bestiole& b) ;
     void naissance();
@@ -50,7 +50,10 @@ public:
     void checkForCollisions();
     void attribuerCapteurs(Bestiole* b);
     void attribuerAccessoires(Bestiole* b);
-
+    void comporter();
+    std::vector<int> getdead();
+    void removeDead();
+    
 };
 
 #endif // MILIEU_H

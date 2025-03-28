@@ -17,7 +17,7 @@ protected:
 public:
     SensorDecorator(Bestiole* b) : bestiole(b) {}
     virtual ~SensorDecorator() {}
-
+    virtual void drawEffect(UImg &support) = 0;
     /**
      * @brief Détermine si le capteur détecte une bestiole cible.
      * @param autre La bestiole cible.

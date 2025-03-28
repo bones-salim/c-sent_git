@@ -1,35 +1,31 @@
 #ifndef KAMIKAZE_H
 #define KAMIKAZE_H
-#include <cmath>
-#include "Bestiole.h"
+
 #include "Comportement.h"
-class Bestiole;
+#include "Bestiole.h"
+#include <vector>
+#include <memory>
 
-class Kamikaze : public Comportement //heritage
+class Kamikaze : public Comportement
 {
+private:
+    Bestiole *bestiole;
 
-    private:
-        Bestiole *bestiole;
-        void chase(Bestiole *target);
-        
+public:
+    Kamikaze(Bestiole *bestiole);
 
+    void behave(std::vector<std::unique_ptr<Bestiole>>& listeBestioles) override;
+    Bestiole* getTarget(std::vector<std::unique_ptr<Bestiole>>& listeBestioles);
+    void chase(Bestiole *target);
+    double calculateDistance(const Bestiole &b1, const Bestiole &b2);
 
-    protected:
-    public:
-        Kamikaze(Bestiole *bestiole);
-        void behave(Milieu& milieu, std::vector<Bestiole>& ListeBestiole) override;
-        virtual std::unique_ptr<Comportement> clone()  override;
-        //reference vs pointers
-        Bestiole* getTarget(std::vector<Bestiole>& ListeBestiole);
-        void chase(Bestiole& target);
-        ~Kamikaze() = default;
-        std::string getNom() override;
-        //change with new implementation
-        double calculateDistance(const Bestiole &b1, const Bestiole &b2);
+    std::string getNom() const override ;
+    std::unique_ptr<Comportement> clone(Bestiole *bestiole) const override ;
 
-}
-;
+};
+
 #endif
+
 
 
 

@@ -18,9 +18,10 @@ void Camouflage::applyEffect()
 
 void Camouflage::drawEffect(UImg &support)
 {
-    // Dessiner un halo indiquant le camouflage
-    //support.drawHalo(bestiole->getX(), bestiole->getY(), 25, efficaciteCamouflage);
+    unsigned char vert[3] = {0, 255, 0};
+    support.draw_circle(bestiole->getX(), bestiole->getY(), bestiole->getAFF_SIZE() + 5, vert, 0.2);
 }
+
 
 
 

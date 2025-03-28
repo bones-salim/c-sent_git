@@ -11,10 +11,10 @@ class Milieu;
 class Comportement
 {
 public:
-    virtual void behave(Milieu& milieu, std::vector<Bestiole>& ListeBestiole) = 0;
+    virtual void behave(std::vector<std::unique_ptr<Bestiole>>& listeBestioles)=0;
     virtual ~Comportement() = default;
-    virtual std::string getNom() = 0;
-    virtual std::unique_ptr<Comportement> clone() = 0;
+    virtual std::string getNom() const = 0;
+    virtual std::unique_ptr<Comportement> clone(Bestiole* bestiole) const = 0;
 };
 
 #endif  // COMPORTEMENT_H

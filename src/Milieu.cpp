@@ -12,7 +12,8 @@
 #include <Nageoires.h>
 #include <Carapace.h>
 #include <Camouflage.h>
-
+#include "CImg.h"
+using namespace cimg_library;
 
 const T Milieu::white[] = { (T)255, (T)255, (T)255 };
 
@@ -34,12 +35,21 @@ Milieu::~Milieu()
     std::cout << "dest Milieu" << std::endl;
 }
 
+void Milieu::comporter(){
+    for (auto& bestiole : listeBestioles) {
+        if (bestiole->getComportement() != nullptr) {
+            std::cout << "I am behaving" << std::endl;
+            bestiole->getComportement()->behave(listeBestioles);
+        } else {
+            bestiole->setCouleur(0, 0, 0);
+        }
+    } 
+}
+
 void Milieu::step()
 {
-    // Remplit toute l'image avec du blanc
+    // Remplir l'image de blanc et dessiner le carré de test...
     this->fill(255);
-
-    // Dessine un carré rouge au centre pour tester
     int cx = width / 2;
     int cy = height / 2;
     for (int x = cx - 20; x < cx + 20; ++x) {
@@ -50,12 +60,18 @@ void Milieu::step()
         }
     }
 
-    // Appelle ensuite l'action et le dessin de chaque bestiole
+    // Phase 1 : mettre à jour et dessiner toutes les bestioles
     for (auto& bestiole : listeBestioles) {
         bestiole->action(*this);
         bestiole->draw(*this);
     }
+
+    // Phase 2 : traiter les collisions, suppression et comportements
+    checkForCollisions();
+    removeDead();
+    comporter();
 }
+
 
 
 int Milieu::nbVoisins(const Bestiole& b)
@@ -108,7 +124,7 @@ void Milieu::naissance(){
         auto creerComportement = [](const std::string& nom, Bestiole* b) -> std::unique_ptr<Comportement> {
             if (nom == "Peureuse") return std::make_unique<Peureuse>(b);
             if (nom == "Grégaire") return std::make_unique<Gregaire>(0.5, b);
-            if (nom == "Prévoyante") return std::make_unique<Prevoyante>(b);
+            if (nom == "Prévoyante") return std::make_unique<Prevoyante>(0.1,b);
             // if (nom == "Multiple") return std::make_unique<PersonnalitesMultiples>(b);
             if (nom == "Kamikaze") return std::make_unique<Kamikaze>(b);
             return nullptr;
@@ -127,6 +143,7 @@ void Milieu::naissance(){
             std::unique_ptr<Comportement> comp = creerComportement(comportementChoisi, newBestiole);
             newBestiole->setComportement(std::move(comp));
             // Attribuer capteurs et accessoires
+            newBestiole->initCoords(width, height);
             attribuerCapteurs(newBestiole);
             attribuerAccessoires(newBestiole);
             // Ajouter la bestiole dans la liste (une seule fois)
@@ -145,30 +162,52 @@ void Milieu::supprimerBestiole(Bestiole* b) {
       }), listeBestioles.end());
    }
 }
-void Milieu::checkForCollisions()
-{
-    int collisionRange = 3;
-    for (auto it = listeBestioles.begin(); it != listeBestioles.end();)
-    {  
-        
-        for (auto it2 = listeBestioles.begin(); it2 != listeBestioles.end();)
-       {
-          if (std::abs((*it)->getX() - (*it2)->getX()) <= collisionRange)
-          {
-             if (std::abs((*it)->getY() - (*it2)->getY()) <= collisionRange)
-             {
-                if (*it != *it2)
-                {
-                   (*it)->collide();
-                   break;
-                }
-             }
-          }
-          ++it2;
-       }
-       ++it;
+
+std::vector<int> Milieu::getdead() {
+    std::vector<int> deadIndexes;
+    for (size_t i = 0; i < listeBestioles.size(); ++i) {
+        if (listeBestioles[i]->getMort()) { 
+            deadIndexes.push_back(static_cast<int>(i));
+        }
+    }
+    return deadIndexes;
+}
+
+ 
+void Milieu::removeDead() {
+    std::vector<int> deadIndexes = getdead();
+
+    // Trier les indices décroissants pour éviter des invalidations d'indices
+    std::sort(deadIndexes.begin(), deadIndexes.end(), std::greater<int>());
+
+    for (int indexToDelete : deadIndexes) {
+        if (indexToDelete >= 0 && static_cast<size_t>(indexToDelete) < listeBestioles.size()) {
+            listeBestioles.erase(listeBestioles.begin() + indexToDelete);
+        }
     }
 }
+
+
+
+void Milieu::checkForCollisions() {
+    int collisionRange = 7;
+
+    for (auto it = listeBestioles.begin(); it != listeBestioles.end(); ++it) {
+        for (auto it2 = listeBestioles.begin(); it2 != listeBestioles.end(); ++it2) {
+            if (it != it2) {
+                Bestiole* b1 = it->get();
+                Bestiole* b2 = it2->get();
+
+                if (std::abs(b1->getX() - b2->getX()) <= collisionRange &&
+                    std::abs(b1->getY() - b2->getY()) <= collisionRange) {
+                    b1->collide();
+                    break; // Arrête dès que la collision est gérée pour b1
+                }
+            }
+        }
+    }
+}
+
 void Milieu::attribuerCapteurs(Bestiole* b) {
     // Générer un nombre aléatoire de capteurs (par exemple entre 1 et 3)
     std::random_device rd;

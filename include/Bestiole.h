@@ -36,6 +36,7 @@ private:
    std::string nom;
    std::unique_ptr<Comportement> comportement;
    unsigned char* couleur;
+   bool mort=false; 
 
 public:
    std::vector<std::unique_ptr<SensorDecorator>> listedescapteurs;
@@ -67,6 +68,9 @@ public:
    int getAge() const { return age; };
    double getVitesse() const;
    int get_dureeVie() const;
+   Comportement* getBehavior() const { 
+      return comportement.get(); 
+  }
    Comportement* getComportement() const;
 
    int get_age() const;
@@ -75,6 +79,7 @@ public:
    std::string getNom() const;
    double getVisibilite() const { return Visibilite; };
    double getAFF_SIZE() const {return AFF_SIZE;};
+   bool getMort() const { return mort; };
    void setVisibilite(double x) { Visibilite = x; };
    void setX(int _x) { x = _x; };
    void setY(int _y) { y = _y; };
@@ -84,9 +89,11 @@ public:
    void setVitesse(double x);
    void setMortProb(double p);
    void setDureeVie(int dureeVie_) { dureeVie = dureeVie_; };
+   void setMort(bool m) { mort = m; };
    void setAge(int age_) { age = age_; };
    void bouge(int xLim, int yLim);
    void setComportement(std::unique_ptr<Comportement> comp) ;
+   void dessiner(UImg &support);
    friend bool operator==(const Bestiole &b1, const Bestiole &b2);
 };
 

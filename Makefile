@@ -5,7 +5,7 @@ BUILD = build
 
 # Compilateur et options
 CXX = g++
-CXXFLAGS = -std=c++14 -Wall -I$(INCLUDE)
+CXXFLAGS = -std=c++17 -Wall -I$(INCLUDE)
 
 # Liste des fichiers sources et objets
 SOURCES = $(wildcard $(SRC)/*.cpp)
